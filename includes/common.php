@@ -3,8 +3,9 @@
 namespace ShortNotes\Common;
 
 // Alpha.
-// [ ] Register a custom post type for notes.
-// [ ] Apply a very basic block template to the post type.
+// [x] Register a custom post type for notes.
+// [x] Apply a very basic block template to the post type.
+// [ ] Auto-generate slugs that aren't auto-draft
 // [ ] Add webmention support to post type
 // [ ] Post notes to Twitter.
 // [ ] Inject existing tweets as notes
