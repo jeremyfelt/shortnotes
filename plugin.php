@@ -31,3 +31,4 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 }
 
 require_once __DIR__ . '/includes/common.php';
+require_once __DIR__ . '/includes/post-type-note.php';
