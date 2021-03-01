@@ -160,7 +160,11 @@ function get_formatted_title( $post_data ) {
  * @return array $post_data A modified list of post data.
  */
 function filter_wp_insert_post_data( $post_data ) {
-	if ( get_slug() === $post_data['post_type'] && 'Auto Draft' === $post_data['post_title'] ) {
+	if ( get_slug() !== $post_data['post_type'] ) {
+		return $post_data;
+	}
+
+	if ( 'Auto Draft' === $post_data['post_title'] ) {
 		$post_data['post_title'] = get_placeholder_title();
 		$post_data['post_name']  = substr( wp_generate_uuid4(), 0, 4 ) . time();
 	}
