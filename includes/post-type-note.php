@@ -49,7 +49,6 @@ function register_post_type() {
 				'item_scheduled'           => __( 'Note scheduled.', 'shortnotes' ),
 				'item_updated'             => __( 'Note updated.', 'shortnotes' ),
 			),
-			'description'   => __( 'Used for shorter content, like notes.', 'shortnotes' ),
 			'public'        => true,
 			'menu_position' => 6,
 			'menu_icon'     => 'dashicons-edit-large',
