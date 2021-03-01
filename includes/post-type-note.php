@@ -57,6 +57,7 @@ function register_post_type() {
 			'supports'      => array(
 				'editor',
 				'comments',
+				'author',
 
 				// Webmentions, pingbacks, and trackbacks are required to fully
 				// support webmentions until I figure out that I'm wrong.
