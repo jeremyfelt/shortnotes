@@ -33,7 +33,12 @@ function register_post_type() {
 			'supports'      => array(
 				'editor',
 				'comments',
+
+				// Webmentions, pingbacks, and trackbacks are required to fully
+				// support webmentions until I figure out that I'm wrong.
 				'webmentions',
+				'pingbacks',
+				'trackbacks',
 			),
 			'has_archive'   => true,
 			'rewrite'       => array(
