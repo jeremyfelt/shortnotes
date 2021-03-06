@@ -1,6 +1,6 @@
 {
   "name": "shortnotes",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Add a notes post type to WordPress. For your short notes.",
   "scripts": {
     "build": "wp-scripts build"
