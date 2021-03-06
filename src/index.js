@@ -9,10 +9,10 @@ const ReplyToSideBarPanel = () => {
 
 	const { editPost } = useDispatch( 'core/editor' );
 
-	const setMetaValue = ( value ) => {
+	const setMetaValue = ( key, value ) => {
 		editPost( {
 			meta: {
-				[ 'shortnotes_reply_to_url' ]: value,
+				[ key ]: value,
 			},
 		} );
 	};
@@ -27,7 +27,13 @@ const ReplyToSideBarPanel = () => {
                 label={ __( 'Reply to URL (optional)', 'shortnotes' ) }
                 help={ __( 'Enter a URL if this note is a reply', 'shortnotes' ) }
                 value={ meta.shortnotes_reply_to_url }
-                onChange={ setMetaValue }
+                onChange={ (value ) => setMetaValue( 'shortnotes_reply_to_url', value ) }
+            />
+          <TextareaControl
+                label={ __( 'Reply to name (optional)', 'shortnotes' ) }
+                help={ __( 'Enter a name this reply is directed to', 'shortnotes' ) }
+                value={ meta.shortnotes_reply_to_name }
+                onChange={ (value ) => setMetaValue( 'shortnotes_reply_to_name', value ) }
             />
 		</PluginDocumentSettingPanel>
 	);

@@ -6,6 +6,7 @@ add_action( 'init', __NAMESPACE__ . '\register_post_type', 10 );
 add_filter( 'allowed_block_types', __NAMESPACE__ . '\filter_allowed_block_types', 10, 2 );
 add_filter( 'wp_insert_post_data', __NAMESPACE__ . '\filter_wp_insert_post_data', 10 );
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
+add_filter( 'the_content', __NAMESPACE__ . '\prepend_reply_to_markup', 5 );
 
 /**
  * Provide the common slug used for the Notes post type.
@@ -85,6 +86,20 @@ function register_meta() {
 			'object_subtype'    => get_slug(),
 			'type'              => 'string',
 			'description'       => __( 'The URL this note is a reply to.', 'shortnotes' ),
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+			'single'            => true,
+			'show_in_rest'      => true,
+		)
+	);
+
+	\register_meta(
+		'post',
+		'shortnotes_reply_to_name',
+		array(
+			'object_subtype'    => get_slug(),
+			'type'              => 'string',
+			'description'       => __( 'A name this note is a reply to', 'shortnotes' ),
 			'default'           => '',
 			'sanitize_callback' => 'sanitize_text_field',
 			'single'            => true,
@@ -194,4 +209,76 @@ function filter_wp_insert_post_data( $post_data ) {
 	}
 
 	return $post_data;
+}
+
+/**
+ * Retrieve the markup used to indicate a note is a reply.
+ *
+ * @see https://indieweb.org/reply
+ *
+ * @param \WP_Post $post A shortnote's post object.
+ * @return string Markup to use for a u-in-reply-to.
+ */
+function get_reply_to_markup( $post ) {
+	if ( get_slug() !== $post->post_type ) {
+		return '';
+	}
+
+	$reply_to_url = get_post_meta( $post->ID, 'shortnotes_reply_to_url', true );
+
+	if ( '' === $reply_to_url ) {
+		return '';
+	}
+
+	$reply_to_name = get_post_meta( $post->ID, 'shortnotes_reply_to_name', true );
+
+	if ( '' === $reply_to_name ) {
+		$reply_to_name = __( 'this post', 'shortnotes' );
+	}
+
+	$reply_to_markup = '<p>In reply to: <a class="shortnotes-reply-to u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . $reply_to_name . '</a></p>';
+
+	return $reply_to_markup;
+}
+
+/**
+ * Output the markup used to indicate that the following content container
+ * is a reply to something posted at another URL.
+ *
+ * Note: This function can be used as a template to output markup in
+ *       a template _before_ an `e-content` container is output. If
+ *       used, this plugins filter of `the_content` will be removed.
+ *
+ * @see https://indieweb.org/reply
+ */
+function reply_to_markup() {
+	// If this function is used by the theme, we can remove the content filter.
+	remove_filter( 'the_content', __NAMESPACE__ . '\prepend_reply_to_markup', 5 );
+
+	$current_post    = get_post();
+	$reply_to_markup = get_reply_to_markup( $current_post );
+
+	echo $reply_to_markup;
+}
+
+/**
+ * Prepend reply markup to notes that have a reply to URL and name
+ * assigned to them.
+ *
+ * @see https://indieweb.org/reply
+ *
+ * @param string $content The current content.
+ * @return string The content, possibly prepended with additional markup.
+ */
+function prepend_reply_to_markup( $content ) {
+	if ( is_admin() ) {
+		return $content;
+	}
+
+	$current_post    = get_post();
+	$reply_to_markup = get_reply_to_markup( $current_post );
+
+	$content = $reply_to_markup . $content;
+
+	return $content;
 }
