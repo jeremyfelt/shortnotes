@@ -1,18 +1,25 @@
-# Short Notes
+=== Shortnotes ===
+Contributors: jeremyfelt
+Tags: indieweb, notes, replies, short
+Requires at least: 5.6
+Stable tag: 1.0.0
+Requires PHP: 5.6
+License: GPLv2 or Later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Add a notes post type to WordPress. For your short notes.
 
-## Description ##
+== Description ==
 
 Shortnotes adds a custom post type, "Notes", intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
 
-### No titles
+## No titles
 
 The Notes post type does not support titles. They are instead automatically generated from the post content, so you don't need to worry about creating a title.
 
 Generated titles are meant to be used as the document title rather than in the displayed content. You will want to adjust the look and feel of your theme accordingly.
 
-### Webmention support
+## Webmention support
 
 The Notes post type includes support for the [Webmention](https://wordpress.org/plugins/webmention/) and [Semantic-Linkbacks](https://wordpress.org/plugins/semantic-linkbacks/) plugins.
 
@@ -28,7 +35,7 @@ Reply to markup is automatically prepended to `the_content` **unless* the templa
 
 The [reply](https://indieweb.org/reply) specification works best when the `u-in-reply-to` element is outside of the main content element.
 
-### Theme Customization
+## Theme Customization
 
 No customization of your theme is needed to use this plugin, though it may be useful depending on how titles are displayed and if you want full support for webmentions.
 
