@@ -5,6 +5,7 @@ namespace ShortNotes\PostType\Note;
 add_action( 'init', __NAMESPACE__ . '\register_post_type', 10 );
 add_filter( 'allowed_block_types', __NAMESPACE__ . '\filter_allowed_block_types', 10, 2 );
 add_filter( 'wp_insert_post_data', __NAMESPACE__ . '\filter_wp_insert_post_data', 10 );
+add_action( 'init', __NAMESPACE__ . '\register_meta' );
 
 /**
  * Provide the common slug used for the Notes post type.
@@ -57,6 +58,7 @@ function register_post_type() {
 				'editor',
 				'comments',
 				'author',
+				'custom-fields',
 
 				// Webmentions, pingbacks, and trackbacks are required to fully
 				// support webmentions until I figure out that I'm wrong.
@@ -68,6 +70,25 @@ function register_post_type() {
 			'rewrite'       => array(
 				'slug' => 'notes',
 			),
+		)
+	);
+}
+
+/**
+ * Register the meta field(s) used by this post type.
+ */
+function register_meta() {
+	\register_meta(
+		'post',
+		'shortnotes_reply_to_url',
+		array(
+			'object_subtype'    => get_slug(),
+			'type'              => 'string',
+			'description'       => __( 'The URL this note is a reply to.', 'shortnotes' ),
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+			'single'            => true,
+			'show_in_rest'      => true,
 		)
 	);
 }
