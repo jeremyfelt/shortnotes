@@ -1,2 +1,6 @@
 .distignore
 .gitignore
+node_modules
+src/index.js
+package.json
+package-lock.json
