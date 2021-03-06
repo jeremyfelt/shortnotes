@@ -1,0 +1,21 @@
+{
+  "name": "shortnotes",
+  "version": "0.0.2",
+  "description": "Add a notes post type to WordPress. For your short notes.",
+  "scripts": {
+    "build": "wp-scripts build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremyfelt/shortnotes.git"
+  },
+  "author": "jeremyfelt",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/jeremyfelt/shortnotes/issues"
+  },
+  "homepage": "https://github.com/jeremyfelt/shortnotes#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^13.0.3"
+  }
+}
