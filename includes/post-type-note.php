@@ -236,7 +236,7 @@ function get_reply_to_markup( $post ) {
 		$reply_to_name = __( 'this post', 'shortnotes' );
 	}
 
-	$reply_to_markup = '<p class="shortnotes-reply-to">In reply to: <a class="u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . $reply_to_name . '</a></p>';
+	$reply_to_markup = '<p class="shortnotes-reply-to">' . __( 'In reply to:' ) . '<a class="u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . esc_html( $reply_to_name ) . '</a></p>';
 
 	return $reply_to_markup;
 }
@@ -258,7 +258,7 @@ function reply_to_markup() {
 	$current_post    = get_post();
 	$reply_to_markup = get_reply_to_markup( $current_post );
 
-	echo $reply_to_markup;
+	echo $reply_to_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
