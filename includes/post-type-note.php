@@ -170,7 +170,7 @@ function get_formatted_title( $post_data ) {
 			$sub_title = $string_lenth >= mb_strlen( $sub_title ) ? $sub_title : substr( $sub_title, 0, $string_lenth ) . '&hellip;';
 
 			// A paragraph has been found, we're moving on and using it for the title.
-			continue;
+			break;
 		} elseif ( 'core/image' === $block['blockName'] ) {
 			$sub_title = __( 'Image posted on', 'shortnotes' ) . ' ' . $sub_title;
 		} elseif ( 'core/gallery' === $block['blockName'] ) {
