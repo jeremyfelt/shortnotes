@@ -32,4 +32,4 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 
 require_once __DIR__ . '/includes/common.php';
 require_once __DIR__ . '/includes/post-type-note.php';
-require_once __DIr__ . '/includes/webmention.php';
+require_once __DIR__ . '/includes/webmention.php';
