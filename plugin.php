@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:     Short Notes
- * Plugin URI:      https://github.com/jeremyfelt/shortnotes/
+ * Plugin URI:      https://wordpress.org/plugins/shortnotes/
  * Description:     Add a notes post type to WordPress. For your short notes.
  * Author:          jeremyfelt
  * Author URI:      https://jeremyfelt.com
  * Text Domain:     shortnotes
  * Domain Path:     /languages
- * Version:         1.0.0
+ * Version:         1.0.1
  */
 
 // If this file is called directly, abort.
