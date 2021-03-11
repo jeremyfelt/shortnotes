@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:     Short Notes
+ * Plugin Name:     Shortnotes
  * Plugin URI:      https://wordpress.org/plugins/shortnotes/
  * Description:     Add a notes post type to WordPress. For your short notes.
  * Author:          jeremyfelt
@@ -23,7 +23,7 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 	 */
 	function shortnotes_admin_notice() {
 		echo '<div class=\"error\"><p>';
-		echo __( 'The Short Notes WordPress plugin requires PHP 5.6 to function properly. Please upgrade PHP or deactivate the plugin.', 'shortnotes' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo __( 'The Shortnotes WordPress plugin requires PHP 5.6 to function properly. Please upgrade PHP or deactivate the plugin.', 'shortnotes' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</p></div>';
 	}
 
