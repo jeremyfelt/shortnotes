@@ -10,7 +10,7 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_edito
  * @return string The plugin version.
  */
 function get_version() {
-	return '0.0.1';
+	return '1.0.1';
 }
 
 /**
