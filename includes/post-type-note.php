@@ -3,6 +3,7 @@
 namespace ShortNotes\PostType\Note;
 
 add_action( 'init', __NAMESPACE__ . '\register_post_type', 10 );
+add_action( 'admin_init', __NAMESPACE__ . '\flush_rewrite_rules', 10 );
 add_filter( 'allowed_block_types', __NAMESPACE__ . '\filter_allowed_block_types', 10, 2 );
 add_filter( 'wp_insert_post_data', __NAMESPACE__ . '\filter_wp_insert_post_data', 10 );
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
@@ -73,6 +74,19 @@ function register_post_type() {
 			),
 		)
 	);
+}
+
+/**
+ * Flush rewrite rules to ensure the notes post type is
+ * available as expected.
+ */
+function flush_rewrite_rules() {
+	$rules_version = get_option( 'shortnotes_rules_version', false );
+
+	if ( false === $rules_version ) {
+		\flush_rewrite_rules();
+		update_option( 'shortnotes_rules_version', '1.0.0', false );
+	}
 }
 
 /**
