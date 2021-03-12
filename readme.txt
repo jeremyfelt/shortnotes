@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 5.7
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 5.6
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -45,3 +45,9 @@ No customization of your theme is needed to use this plugin, though it may be us
 If you do find yourself wanting to customize, I have made [adjustments to my site's theme](https://github.com/jeremyfelt/writemore/blob/0b344cc9613b1ed011cba13cb3c09376def596fc/template-parts/content/content-single.php#L16-L36), a child theme of Twenty Twenty One, while developing this plugin, that can be used as an example.
 
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
+
+== Changelog ==
+
+= 1.0.2 =
+
+* Fix display of "(no title) is now live." in block editor when new note is published.
