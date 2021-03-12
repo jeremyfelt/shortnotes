@@ -1,8 +1,10 @@
 .distignore
 .gitignore
 .git
+.github
 node_modules
 src/
 src/index.js
 package.json
 package-lock.json
+README.md
