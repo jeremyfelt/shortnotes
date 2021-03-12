@@ -1,8 +1,7 @@
-name: Update Plugin Assets
+name: Update readme.txt and assets
 on:
   push:
-    branches:
-    - develop
+    branches: [ trunk ]
 jobs:
   trunk:
     name: Push to trunk
