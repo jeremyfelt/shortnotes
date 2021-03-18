@@ -22,6 +22,10 @@ A title **is** generated automatically from note content and is used as the note
 
 Note titles are **not** generally meant to be displayed as part of the theme layout. You will likely need to adjust the look and feel of your theme accordingly. See the Theme Customization section below for more details.
 
+### Known issue
+
+The block editor will crash if you try to access the code editor view while editing a note. This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) for post types that do not have support for titles.
+
 ## Limited blocks
 
 The *Notes* post type uses only paragraph, image, and gallery blocks.
