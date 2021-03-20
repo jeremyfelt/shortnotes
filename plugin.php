@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Shortnotes
- * Plugin URI:      https://wordpress.org/plugins/shortnotes/
+ * Plugin URI:      https://github.com/jeremyfelt/shortnotes
  * Description:     Add a notes post type to WordPress. For your short notes.
  * Author:          jeremyfelt
  * Author URI:      https://jeremyfelt.com

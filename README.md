@@ -16,7 +16,7 @@ A title **is** generated automatically from note content and is used as the note
 
 ### Limited blocks
 
-The *Notes* post type uses only basic content blocks like paragraph, image, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
+The **Notes** post type uses only basic content blocks like paragraph, image, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
 
 ### Webmention support
 
