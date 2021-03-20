@@ -4,27 +4,23 @@ Add a notes post type to WordPress. For your short notes.
 
 ## Description
 
-Shortnotes adds a custom post type, "Notes", intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
+Shortnotes adds a custom post type, **Notes**, intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
 
 ### No titles
 
-The *Notes* post type does not support traditional titles.
-
-A title **is** generated automatically from note content and is used as the note's document title. This is readable by search engines and displayed in browser tabs.
+The **Notes** post type does not support traditional titles.
 
 Note titles are **not** generally meant to be displayed as part of the theme layout. You will likely need to adjust the look and feel of your theme accordingly. See the Theme Customization section below for more details.
 
+A title **is** generated automatically from note content and is used as the note's document title. This is readable by search engines and displayed in browser tabs.
+
 ### Limited blocks
 
-The *Notes* post type uses only paragraph, image, and gallery blocks.
-
-This list will likely expand a bit, but starting with a defined list of relatively simple blocks helps to keep notes simple.
-
-You may want to install [Unregister Broken Patterns](https://wordpress.org/plugins/unregister-broken-patterns/) to automatically remove any block patterns that contain blocks not supported by this post type.
+The *Notes* post type uses only basic content blocks like paragraph, image, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
 
 ### Webmention support
 
-The *Notes* post type includes support for the [Webmention](https://wordpress.org/plugins/webmention/) and [Semantic-Linkbacks](https://wordpress.org/plugins/semantic-linkbacks/) plugins.
+The **Notes** post type includes support for the [Webmention](https://wordpress.org/plugins/webmention/) and [Semantic-Linkbacks](https://wordpress.org/plugins/semantic-linkbacks/) plugins.
 
 URLs in note content are processed as possible [webmentions](https://indieweb.org/webmention).
 
@@ -56,3 +52,26 @@ No customization of your theme is required to use this plugin, though you will l
 If you do find yourself wanting to customize, I have made [adjustments to my site's theme](https://github.com/jeremyfelt/writemore/blob/0b344cc9613b1ed011cba13cb3c09376def596fc/template-parts/content/content-single.php#L16-L36), a child theme of Twenty Twenty One, while developing this plugin, that can be used as an example.
 
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
+
+## Frequently Asked Questions
+
+### Block editor crashes when I try to access the code editor for a note
+
+This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) and a [pull request](https://github.com/WordPress/gutenberg/pull/29922) has been submitted.
+
+### Block editor shows block patterns containing unavailable blocks
+
+This is a bug in the block editor. See [Gutenberg issue #23275](https://github.com/WordPress/gutenberg/issues/23275) for more information.
+
+You can install [Unregister Broken Patterns](https://wordpress.org/plugins/unregister-broken-patterns/) in the meantime to automatically remove any block patterns that contain blocks not supported by this post type.
+
+## Changelog
+
+### 1.1.0
+
+* Add support for more simple core blocks: video, file, embed, etc...
+* Fix overeager loading of plugin assets on post types that are not shortnote.
+
+### 1.0.2
+
+* Fix display of "(no title) is now live." in block editor when new note is published.

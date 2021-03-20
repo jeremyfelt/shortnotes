@@ -3,46 +3,38 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 5.7
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 Requires PHP: 5.6
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Add a notes post type to WordPress. For your short notes.
 
-== Description ==
+## Description
 
-Shortnotes adds a custom post type, "Notes", intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
+Shortnotes adds a custom post type, **Notes**, intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
 
-## No titles
+### No titles
 
-The *Notes* post type does not support traditional titles.
-
-A title **is** generated automatically from note content and is used as the note's document title. This is readable by search engines and displayed in browser tabs.
+The **Notes** post type does not support traditional titles.
 
 Note titles are **not** generally meant to be displayed as part of the theme layout. You will likely need to adjust the look and feel of your theme accordingly. See the Theme Customization section below for more details.
 
-### Known issue
+A title **is** generated automatically from note content and is used as the note's document title. This is readable by search engines and displayed in browser tabs.
 
-The block editor will crash if you try to access the code editor view while editing a note. This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) for post types that do not have support for titles.
+### Limited blocks
 
-## Limited blocks
+The *Notes* post type uses only basic content blocks like paragraph, image, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
 
-The *Notes* post type uses only paragraph, image, and gallery blocks.
+### Webmention support
 
-This list will likely expand a bit, but starting with a defined list of relatively simple blocks helps to keep notes simple.
-
-You may want to install [Unregister Broken Patterns](https://wordpress.org/plugins/unregister-broken-patterns/) to automatically remove any block patterns that contain blocks not supported by this post type.
-
-## Webmention support
-
-The *Notes* post type includes support for the [Webmention](https://wordpress.org/plugins/webmention/) and [Semantic-Linkbacks](https://wordpress.org/plugins/semantic-linkbacks/) plugins.
+The **Notes** post type includes support for the [Webmention](https://wordpress.org/plugins/webmention/) and [Semantic-Linkbacks](https://wordpress.org/plugins/semantic-linkbacks/) plugins.
 
 URLs in note content are processed as possible [webmentions](https://indieweb.org/webmention).
 
 A panel in the block editor allows for the addition of a reply to URL and name. When entered, they are used to provide markup for a semantic webmention [reply](https://indieweb.org/reply).
 
-### Reply to template tag
+#### Reply to template tag
 
 The [reply](https://indieweb.org/reply) specification works best when the `u-in-reply-to` element is outside of the [main content element](http://microformats.org/wiki/h-entry#Properties), defined by `e-content`.
 
@@ -61,7 +53,7 @@ A template tag is provided as part of the Shortnotes plugin that can be used to 
 
 If this template tag is **not** used, then the Shortnotes plugin will automatically prepend the reply to markup to `the_content`.
 
-## Theme Customization
+### Theme Customization
 
 No customization of your theme is required to use this plugin, though you will likely want to think through how titles are displayed and if you want full support for webmentions.
 
@@ -69,8 +61,25 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
-== Changelog ==
+## Frequently Asked Questions
 
-= 1.0.2 =
+### Block editor crashes when I try to access the code editor for a note
+
+This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) and a [pull request](https://github.com/WordPress/gutenberg/pull/29922) has been submitted.
+
+### Block editor shows block patterns containing unavailable blocks
+
+This is a bug in the block editor. See [Gutenberg issue #23275](https://github.com/WordPress/gutenberg/issues/23275) for more information.
+
+You can install [Unregister Broken Patterns](https://wordpress.org/plugins/unregister-broken-patterns/) in the meantime to automatically remove any block patterns that contain blocks not supported by this post type.
+
+## Changelog
+
+### 1.1.0
+
+* Add support for more simple core blocks: video, file, embed, etc...
+* Fix overeager loading of plugin assets on post types that are not shortnote.
+
+### 1.0.2
 
 * Fix display of "(no title) is now live." in block editor when new note is published.
