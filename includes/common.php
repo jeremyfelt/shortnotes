@@ -17,6 +17,11 @@ function get_version() {
  * Enqueue the assets used in the block editor.
  */
 function enqueue_block_editor_assets() {
+	// Do not load assets on other post types.
+	if ( \ShortNotes\PostType\Note\get_slug() !== get_current_screen()->id ) {
+		return;
+	}
+
 	$assets = require_once dirname( __DIR__ ) . '/build/index.asset.php';
 
 	wp_enqueue_script(
