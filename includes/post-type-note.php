@@ -126,6 +126,9 @@ function register_meta() {
 /**
  * Limit the blocks that can be used for a notes post. Keep it simple.
  *
+ * In general, stick to blocks that do not provide much additional formatting,
+ * but that are meant for adding specific pieces of content.
+ *
  * Note: There's nothing horrible about allowing more blocks. Unhooking this
  *       function from the `allowed_block_types` filter won't cause any trouble.
  *
@@ -136,12 +139,18 @@ function register_meta() {
 function filter_allowed_block_types( $allowed_block_types, $post ) {
 	if ( get_slug() === $post->post_type ) {
 		return array(
-			'core/paragraph',
-			'core/image',
-			'core/gallery',
-			'core/video',
-			'core/file',
+			'core/code',
 			'core/embed',
+			'core/file',
+			'core/gallery',
+			'core/image',
+			'core/list',
+			'core/paragraph',
+			'core/preformatted',
+			'core/pullquote',
+			'core/quote',
+			'core/verse',
+			'core/video',
 		);
 	}
 
