@@ -139,6 +139,9 @@ function filter_allowed_block_types( $allowed_block_types, $post ) {
 			'core/paragraph',
 			'core/image',
 			'core/gallery',
+			'core/video',
+			'core/file',
+			'core/embed',
 		);
 	}
 
