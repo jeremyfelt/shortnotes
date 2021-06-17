@@ -65,7 +65,7 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ### Block editor crashes when I try to access the code editor for a note
 
-This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) and a [pull request](https://github.com/WordPress/gutenberg/pull/29922) has been submitted.
+This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) and a [pull request](https://github.com/WordPress/gutenberg/pull/29922) has been submitted. That pull request was merged into the Gutenberg plugin and should be part of the WordPress 5.8 release.
 
 ### Block editor shows block patterns containing unavailable blocks
 
