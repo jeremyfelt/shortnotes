@@ -68,6 +68,7 @@ Those adjustments (a) remove the display of a title for the note post type and (
 * Confirm support for WordPress 5.8.
 * Update `@wordpress/scripts` dependency to 17.0.0.
 * Rebuild JavaScript asset with latest WP scripts.
+* Remove unused `get_version()` function before it's too late!
 
 ### 1.1.0
 
