@@ -53,19 +53,14 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
-## Frequently Asked Questions
-
-### Block editor crashes when I try to access the code editor for a note
-
-This has been reported as a [bug in Gutenberg](https://github.com/WordPress/gutenberg/issues/29921) and a [pull request](https://github.com/WordPress/gutenberg/pull/29922) has been submitted. That pull request was merged into the Gutenberg plugin and should be part of the WordPress 5.8 release.
-
-### Block editor shows block patterns containing unavailable blocks
-
-This is a bug in the block editor. See [Gutenberg issue #23275](https://github.com/WordPress/gutenberg/issues/23275) for more information.
-
-You can install [Unregister Broken Patterns](https://wordpress.org/plugins/unregister-broken-patterns/) in the meantime to automatically remove any block patterns that contain blocks not supported by this post type.
-
 ## Changelog
+
+### 1.1.1
+
+* Confirm support for WordPress 5.8.
+* Update `@wordpress/scripts` dependency to 17.0.0.
+* Rebuild JavaScript asset with latest WP scripts.
+* Remove unused `get_version()` function before it's too late!
 
 ### 1.1.0
 

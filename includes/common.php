@@ -5,15 +5,6 @@ namespace ShortNotes\Common;
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_editor_assets' );
 
 /**
- * Retrieve the plugin version.
- *
- * @return string The plugin version.
- */
-function get_version() {
-	return '1.0.2';
-}
-
-/**
  * Enqueue the assets used in the block editor.
  */
 function enqueue_block_editor_assets() {
