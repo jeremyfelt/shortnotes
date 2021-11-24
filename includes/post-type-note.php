@@ -282,6 +282,15 @@ function get_reply_to_markup( $post ) {
 		$reply_to_name = __( 'this post', 'shortnotes' );
 	}
 
+	/**
+	 * Filters the text used for the reply-to name.
+	 *
+	 * @param string   $reply_to_name The current text.
+	 * @param \WP_Post $post          A shortnote's post object.
+	 * @param string   $reply_to_url  The reply-to URL.
+	 */
+	$reply_to_name = apply_filters( 'shortnotes_reply_to_name', $reply_to_name, $post, $reply_to_url );
+
 	$reply_to_markup = '<p class="shortnotes-reply-to">' . __( 'In reply to:' ) . ' <a class="u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . esc_html( $reply_to_name ) . '</a></p>';
 
 	return $reply_to_markup;
