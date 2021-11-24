@@ -285,6 +285,8 @@ function get_reply_to_markup( $post ) {
 	/**
 	 * Filters the text used for the reply-to name.
 	 *
+	 * @since 1.1.2
+	 *
 	 * @param string   $reply_to_name The current text.
 	 * @param \WP_Post $post          A shortnote's post object.
 	 * @param string   $reply_to_url  The reply-to URL.

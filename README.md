@@ -55,6 +55,12 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.1.2
+
+* Add `shortnotes_reply_to_name` filter.
+* Update `@wordpress/scripts` dependency to 19.2.2.
+* Rebuild JavaScript asset with latest WP scripts.
+
 ### 1.1.1
 
 * Confirm support for WordPress 5.8.
