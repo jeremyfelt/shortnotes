@@ -55,6 +55,10 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.1.3
+
+* Stop editor from crashing when a note is saved in Gutenberg 11.4.0+.
+
 ### 1.1.2
 
 * Add `shortnotes_reply_to_name` filter.
