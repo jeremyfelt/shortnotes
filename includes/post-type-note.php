@@ -6,7 +6,6 @@ add_action( 'init', __NAMESPACE__ . '\register_post_type', 10 );
 add_action( 'admin_init', __NAMESPACE__ . '\flush_rewrite_rules', 10 );
 add_filter( 'allowed_block_types', __NAMESPACE__ . '\filter_allowed_block_types', 10, 2 );
 add_filter( 'wp_insert_post_data', __NAMESPACE__ . '\filter_wp_insert_post_data', 10 );
-add_filter( 'rest_prepare_' . get_slug(), __NAMESPACE__ . '\filter_rest_prepare', 10, 3 );
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
 add_filter( 'the_content', __NAMESPACE__ . '\prepend_reply_to_markup', 5 );
 
@@ -236,25 +235,6 @@ function filter_wp_insert_post_data( $post_data ) {
 	}
 
 	return $post_data;
-}
-
-/**
- * Filter the title returned with a REST response when a new note
- * is created.
- *
- * This avoids the display of "(no title) is now live." when a post
- * type with no title is first published.
- *
- * @param WP_REST_Response $response The response object.
- * @param WP_Post          $post     Post object.
- * @param WP_REST_Request  $request  Request object.
- */
-function filter_rest_prepare( $response, $post, $request ) {
-	if ( 'edit' === $request['context'] ) {
-		$response->data['title'] = __( 'Your note', 'shortnotes' );
-	}
-
-	return $response;
 }
 
 /**
