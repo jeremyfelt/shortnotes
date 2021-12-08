@@ -207,7 +207,7 @@ function get_formatted_title( $post_data ) {
 	/**
 	 * Filters the formatted title generated for notes.
 	 *
-	 * @since 1.1.3
+	 * @since 1.1.4
 	 *
 	 * @param string $title     The formatted title.
 	 * @param array  $post_data A list of data about the post to be updated.

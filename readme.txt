@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 5.8
-Stable tag: 1.1.2
+Stable tag: 1.1.4
 Requires PHP: 5.6
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,10 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.1.4
+
+* Add `shortnotes_formatted_title` filter to allow for additional title filtering elsewhere.
 
 ### 1.1.3
 
