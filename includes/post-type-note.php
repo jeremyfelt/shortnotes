@@ -204,7 +204,16 @@ function get_formatted_title( $post_data ) {
 		}
 	}
 
-	return 'Note: ' . $sub_title;
+	/**
+	 * Filters the formatted title generated for notes.
+	 *
+	 * @since 1.1.3
+	 *
+	 * @param string $title     The formatted title.
+	 * @param array  $post_data A list of data about the post to be updated.
+	 * @return string The filtered formatted title.
+	 */
+	return apply_filters( 'shortnotes_formatted_title', 'Note: ' . $sub_title, $post_data );
 }
 
 /**
