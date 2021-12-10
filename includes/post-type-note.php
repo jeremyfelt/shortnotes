@@ -167,6 +167,27 @@ function get_placeholder_title() {
 }
 
 /**
+ * Generate a shortened subtitle from a block of HTML.
+ *
+ * @since 1.1.5
+ *
+ * @param string $html Markup.
+ * @return string Generated subtitle.
+ */
+function generate_sub_title( $html ) {
+	$sub_title = wp_strip_all_tags( $html );
+
+	// At the risk of being complicated, determine the length of the translated "Note" pretext so
+	// that we can build a maximum string of 50 characters.
+	$string_lenth = 50 - strlen( get_placeholder_title() );
+
+	// If the note text is less then the max string length, use the full text. If not, append an ellipsis.
+	$sub_title = $string_lenth >= mb_strlen( $sub_title ) ? $sub_title : substr( $sub_title, 0, $string_lenth ) . '&hellip;';
+
+	return $sub_title;
+}
+
+/**
  * Format the note's title to be slightly more descriptive and provide a
  * bit more information about the note.
  *
@@ -186,14 +207,7 @@ function get_formatted_title( $post_data ) {
 
 	foreach ( $blocks as $block ) {
 		if ( 'core/paragraph' === $block['blockName'] ) {
-			$sub_title = wp_strip_all_tags( $block['innerHTML'] );
-
-			// At the risk of being complicated, determine the length of the translated "Note" pretext so
-			// that we can build a maximum string of 50 characters.
-			$string_lenth = 50 - strlen( get_placeholder_title() );
-
-			// If the note text is less then the max string length, use the full text. If not, append an ellipsis.
-			$sub_title = $string_lenth >= mb_strlen( $sub_title ) ? $sub_title : substr( $sub_title, 0, $string_lenth ) . '&hellip;';
+			$sub_title = generate_sub_title( $block['innerHTML'] );
 
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
@@ -201,6 +215,11 @@ function get_formatted_title( $post_data ) {
 			$sub_title = __( 'Image posted on', 'shortnotes' ) . ' ' . $sub_title;
 		} elseif ( 'core/gallery' === $block['blockName'] ) {
 			$sub_title = __( 'Images posted on', 'shortnotes' ) . ' ' . $sub_title;
+		} elseif ( null === $block['blockName'] && 1 < trim( wp_strip_all_tags( mb_strlen( $block['innerHTML'] ) ) ) ) {
+			$sub_title = generate_sub_title( $block['innerHTML'] );
+
+			// A non-block block of HTML has been found with more than one character, so we're using that as the HTML.
+			break;
 		}
 	}
 
