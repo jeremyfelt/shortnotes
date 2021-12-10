@@ -236,14 +236,14 @@ function get_formatted_title( $post_data ) {
 }
 
 /**
- * Filter post data when it is inserted to ensure a proper slog and title
+ * Filter post data when it is inserted to ensure a proper slug and title
  * has been generated.
  *
  * Slugs (post_name) are the first 4 characters of a UUID4 combined with
  * a unix timestamp. It's like creative, but not... :)
  *
- * Titles are a placeholder until published and then they are generated
- * with `get_formatted_title()` based on the content.
+ * Titles are a placeholder until published and then generated with
+ * `get_formatted_title()` based on the content.
  *
  * @param array $post_data A list of data about the post to be updated.
  * @return array $post_data A modified list of post data.
