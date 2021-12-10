@@ -55,6 +55,11 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.1.5
+
+* Introduce common function to generate a shortnote's subtitle.
+* Parse non-Gutenberg HTML blocks for possible sub title content.
+
 ### 1.1.4
 
 * Add `shortnotes_formatted_title` filter to allow for additional title filtering elsewhere.
