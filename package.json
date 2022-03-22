@@ -16,7 +16,7 @@
 		"url": "https://github.com/jeremyfelt/shortnotes/issues"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^19.2.2"
+		"@wordpress/scripts": "^22.2.1"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
