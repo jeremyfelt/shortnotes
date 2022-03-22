@@ -22,6 +22,7 @@
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
 		"lint:js": "wp-scripts lint-js",
+		"fix:js": "wp-scripts lint-js --fix",
 		"lint:pkg-json": "wp-scripts lint-pkg-json"
 	}
 }
