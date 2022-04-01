@@ -19,6 +19,25 @@ const NoteTypeSideBarPanel = () => {
 		});
 	};
 
+	/**
+	 * Identify the note type for notes saved before note type
+	 * was tracked as a meta field.
+	 *
+	 * @param {*} metaData The meta data object.
+	 * @returns {string} The note type.
+	 */
+	const getNoteType = ( metaData ) => {
+		if ( '' !== metaData.shortnotes_reply_to_url ) {
+			return 'reply';
+		}
+
+		if ( '' === metaData.shortnotes_note_type ) {
+			return 'note';
+		}
+
+		return metaData.shortnotes_note_type;
+	}
+
 	return (
 		<PluginDocumentSettingPanel
 			name="note-type-panel"
@@ -27,14 +46,14 @@ const NoteTypeSideBarPanel = () => {
 		>
 			<SelectControl
 				label={__('Note type', 'shortnotes')}
-				value={meta.note_type || 'note'}
+				value={getNoteType(meta)}
 				options={[
 					{ label: 'Note', value: 'note' },
 					{ label: 'Reply', value: 'reply' },
 				]}
-				onChange={(value) => setMetaValue('note_type', value)}
+				onChange={(value) => setMetaValue('shortnotes_note_type', value)}
 			/>
-			{meta.note_type === 'reply' && (
+			{'reply' === getNoteType(meta) && (
 				<>
 					<TextControl
 						label={__('Reply to URL', 'shortnotes')}
