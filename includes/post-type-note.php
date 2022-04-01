@@ -95,6 +95,20 @@ function flush_rewrite_rules() {
 function register_meta() {
 	\register_meta(
 		'post',
+		'shortnotes_note_type',
+		array(
+			'object_subtype'    => get_slug(),
+			'type'              => 'string',
+			'description'       => __( 'The type of note.', 'shortnotes' ),
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+			'single'            => true,
+			'show_in_rest'      => true,
+		)
+	);
+
+	\register_meta(
+		'post',
 		'shortnotes_reply_to_url',
 		array(
 			'object_subtype'    => get_slug(),
