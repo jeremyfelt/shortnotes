@@ -16,13 +16,12 @@
 		"url": "https://github.com/jeremyfelt/shortnotes/issues"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^22.2.1"
+		"@wordpress/scripts": "^22.3.0"
 	},
 	"scripts": {
 		"build": "wp-scripts build",
-		"format": "wp-scripts format",
-		"lint:js": "wp-scripts lint-js",
-		"fix:js": "wp-scripts lint-js --fix",
+		"lint": "wp-scripts lint-js",
+		"fix": "wp-scripts lint-js --fix",
 		"lint:pkg-json": "wp-scripts lint-pkg-json"
 	}
 }

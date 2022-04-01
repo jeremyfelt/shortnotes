@@ -24,19 +24,19 @@ const NoteTypeSideBarPanel = () => {
 	 * was tracked as a meta field.
 	 *
 	 * @param {*} metaData The meta data object.
-	 * @returns {string} The note type.
+	 * @return {string} The note type.
 	 */
-	const getNoteType = ( metaData ) => {
-		if ( '' !== metaData.shortnotes_reply_to_url ) {
+	const getNoteType = (metaData) => {
+		if ('' !== metaData.shortnotes_reply_to_url) {
 			return 'reply';
 		}
 
-		if ( '' === metaData.shortnotes_note_type ) {
+		if ('' === metaData.shortnotes_note_type) {
 			return 'note';
 		}
 
 		return metaData.shortnotes_note_type;
-	}
+	};
 
 	return (
 		<PluginDocumentSettingPanel
@@ -51,7 +51,9 @@ const NoteTypeSideBarPanel = () => {
 					{ label: 'Note', value: 'note' },
 					{ label: 'Reply', value: 'reply' },
 				]}
-				onChange={(value) => setMetaValue('shortnotes_note_type', value)}
+				onChange={(value) =>
+					setMetaValue('shortnotes_note_type', value)
+				}
 			/>
 			{'reply' === getNoteType(meta) && (
 				<>
