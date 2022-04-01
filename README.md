@@ -55,6 +55,13 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.2.0
+
+* Fix a bug in title generation when an image block is followed by a paragraph.
+* Start tracking note type: note or reply.
+* Improve reply-to interface to appear only when the note type is a reply.
+* Update `@wordpress/scripts` dependency to 22.3.0.
+
 ### 1.1.5
 
 * Introduce common function to generate a shortnote's subtitle.

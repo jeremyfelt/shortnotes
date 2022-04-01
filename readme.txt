@@ -1,9 +1,9 @@
-=== Shortnotes ===
+# Shortnotes
 Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 5.9
-Stable tag: 1.1.5
+Stable tag: 1.2.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -62,6 +62,13 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.2.0
+
+* Fix a bug in title generation when an image block is followed by a paragraph.
+* Start tracking note type: note or reply.
+* Improve reply-to interface to appear only when the note type is a reply.
+* Update `@wordpress/scripts` dependency to 22.3.0.
 
 ### 1.1.5
 
