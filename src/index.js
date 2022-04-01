@@ -1,10 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
-import { TextareaControl } from '@wordpress/components';
+import { SelectControl, TextControl } from '@wordpress/components';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { useDispatch, useSelect } from '@wordpress/data';
 
-const ReplyToSideBarPanel = () => {
+const NoteTypeSideBarPanel = () => {
 	const meta = useSelect((select) =>
 		select('core/editor').getEditedPostAttribute('meta')
 	);
@@ -21,34 +21,50 @@ const ReplyToSideBarPanel = () => {
 
 	return (
 		<PluginDocumentSettingPanel
-			name="reply-to-panel"
-			title={__('Reply to', 'shortnotes')}
+			name="note-type-panel"
+			title={__('Note data', 'shortnotes')}
 			icon={false}
 		>
-			<TextareaControl
-				label={__('Reply to URL (optional)', 'shortnotes')}
-				help={__('Enter a URL if this note is a reply', 'shortnotes')}
-				value={meta.shortnotes_reply_to_url}
-				onChange={(value) =>
-					setMetaValue('shortnotes_reply_to_url', value)
-				}
+			<SelectControl
+				label={__('Note type', 'shortnotes')}
+				value={meta.note_type || 'note'}
+				options={[
+					{ label: 'Note', value: 'note' },
+					{ label: 'Reply', value: 'reply' },
+				]}
+				onChange={(value) => setMetaValue('note_type', value)}
 			/>
-			<TextareaControl
-				label={__('Reply to name (optional)', 'shortnotes')}
-				help={__(
-					'Enter a name this reply is directed to',
-					'shortnotes'
-				)}
-				value={meta.shortnotes_reply_to_name}
-				onChange={(value) =>
-					setMetaValue('shortnotes_reply_to_name', value)
-				}
-			/>
+			{meta.note_type === 'reply' && (
+				<>
+					<TextControl
+						label={__('Reply to URL', 'shortnotes')}
+						help={__(
+							'Enter the URL to which this note is a reply',
+							'shortnotes'
+						)}
+						value={meta.shortnotes_reply_to_url}
+						onChange={(value) =>
+							setMetaValue('shortnotes_reply_to_url', value)
+						}
+					/>
+					<TextControl
+						label={__('Reply to name (optional)', 'shortnotes')}
+						help={__(
+							'Enter a name this reply is directed to. Defaults to "this post".',
+							'shortnotes'
+						)}
+						value={meta.shortnotes_reply_to_name}
+						onChange={(value) =>
+							setMetaValue('shortnotes_reply_to_name', value)
+						}
+					/>
+				</>
+			)}
 		</PluginDocumentSettingPanel>
 	);
 };
 
-registerPlugin('reply-to-panel', {
-	render: ReplyToSideBarPanel,
+registerPlugin('note-type-panel', {
+	render: NoteTypeSideBarPanel,
 	icon: '',
 });
