@@ -229,7 +229,7 @@ function get_formatted_title( $post_data ) {
 			$sub_title = __( 'Image posted on', 'shortnotes' ) . ' ' . $sub_title;
 		} elseif ( 'core/gallery' === $block['blockName'] ) {
 			$sub_title = __( 'Images posted on', 'shortnotes' ) . ' ' . $sub_title;
-		} elseif ( null === $block['blockName'] && 1 < trim( wp_strip_all_tags( mb_strlen( $block['innerHTML'] ) ) ) ) {
+		} elseif ( null === $block['blockName'] && 1 < mb_strlen( trim( wp_strip_all_tags( $block['innerHTML'] ) ) ) ) {
 			$sub_title = generate_sub_title( $block['innerHTML'] );
 
 			// A non-block block of HTML has been found with more than one character, so we're using that as the HTML.
