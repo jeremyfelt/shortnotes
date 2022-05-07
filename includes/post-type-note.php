@@ -22,57 +22,68 @@ function get_slug() {
  * Register the Notes post type.
  */
 function register_post_type() {
+	$post_type_args = array(
+		'label'         => 'Notes',
+		'labels'        => array(
+			'name'                     => __( 'Notes', 'shortnotes' ),
+			'singular_name'            => __( 'Note', 'shortnotes' ),
+			'add_new'                  => __( 'Add New' ),
+			'add_new_item'             => __( 'Add New Note', 'shortnotes' ),
+			'edit_item'                => __( 'Edit Note', 'shortnotes' ),
+			'new_item'                 => __( 'New Note', 'shortnotes' ),
+			'view_item'                => __( 'View Note', 'shortnotes' ),
+			'view_items'               => __( 'View Notes', 'shortnotes' ),
+			'search_items'             => __( 'Search Notes', 'shortnotes' ),
+			'not_found'                => __( 'No notes found.', 'shortnotes' ),
+			'not_found_in_trash'       => __( 'No notes found in Trash.', 'shortnotes' ),
+			'all_items'                => __( 'All Notes', 'shortnotes' ),
+			'archives'                 => __( 'Note Archives', 'shortnotes' ),
+			'attributes'               => __( 'Note Attributes', 'shortnotes' ),
+			'insert_into_item'         => __( 'Insert into note', 'shortnotes' ),
+			'uploaded_to_this_item'    => __( 'Uploaded to this note', 'shortnotes' ),
+			'filter_items_list'        => __( 'Filter notess list', 'shortnotes' ),
+			'items_list_navigation'    => __( 'Notes list navigation', 'shortnotes' ),
+			'items_list'               => __( 'Notes list', 'shortnotes' ),
+			'item_published'           => __( 'Note published.', 'shortnotes' ),
+			'item_published_privately' => __( 'Note published privately.', 'shortnotes' ),
+			'item_reverted_to_draft'   => __( 'Note reverted to draft.', 'shortnotes' ),
+			'item_scheduled'           => __( 'Note scheduled.', 'shortnotes' ),
+			'item_updated'             => __( 'Note updated.', 'shortnotes' ),
+		),
+		'public'        => true,
+		'menu_position' => 6,
+		'menu_icon'     => 'dashicons-edit-large',
+		'show_in_rest'  => true,
+		'supports'      => array(
+			'editor',
+			'comments',
+			'author',
+			'custom-fields',
+
+			// Webmentions, pingbacks, and trackbacks are required to fully
+			// support webmentions until I figure out that I'm wrong.
+			'webmentions',
+			'pingbacks',
+			'trackbacks',
+		),
+		'has_archive'   => true,
+		'rewrite'       => array(
+			'slug' => 'notes',
+		),
+	);
+
+	/**
+	 * Filters the post type arguments used to register the Shortnotes post type.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $post_type_args A list of arguments passed to register_post_type().
+	 */
+	$post_type_args = apply_filters( 'shortnotes_post_type_arguments', $post_type_args );
+
 	\register_post_type(
 		get_slug(),
-		array(
-			'label'         => 'Notes',
-			'labels'        => array(
-				'name'                     => __( 'Notes', 'shortnotes' ),
-				'singular_name'            => __( 'Note', 'shortnotes' ),
-				'add_new'                  => __( 'Add New' ),
-				'add_new_item'             => __( 'Add New Note', 'shortnotes' ),
-				'edit_item'                => __( 'Edit Note', 'shortnotes' ),
-				'new_item'                 => __( 'New Note', 'shortnotes' ),
-				'view_item'                => __( 'View Note', 'shortnotes' ),
-				'view_items'               => __( 'View Notes', 'shortnotes' ),
-				'search_items'             => __( 'Search Notes', 'shortnotes' ),
-				'not_found'                => __( 'No notes found.', 'shortnotes' ),
-				'not_found_in_trash'       => __( 'No notes found in Trash.', 'shortnotes' ),
-				'all_items'                => __( 'All Notes', 'shortnotes' ),
-				'archives'                 => __( 'Note Archives', 'shortnotes' ),
-				'attributes'               => __( 'Note Attributes', 'shortnotes' ),
-				'insert_into_item'         => __( 'Insert into note', 'shortnotes' ),
-				'uploaded_to_this_item'    => __( 'Uploaded to this note', 'shortnotes' ),
-				'filter_items_list'        => __( 'Filter notess list', 'shortnotes' ),
-				'items_list_navigation'    => __( 'Notes list navigation', 'shortnotes' ),
-				'items_list'               => __( 'Notes list', 'shortnotes' ),
-				'item_published'           => __( 'Note published.', 'shortnotes' ),
-				'item_published_privately' => __( 'Note published privately.', 'shortnotes' ),
-				'item_reverted_to_draft'   => __( 'Note reverted to draft.', 'shortnotes' ),
-				'item_scheduled'           => __( 'Note scheduled.', 'shortnotes' ),
-				'item_updated'             => __( 'Note updated.', 'shortnotes' ),
-			),
-			'public'        => true,
-			'menu_position' => 6,
-			'menu_icon'     => 'dashicons-edit-large',
-			'show_in_rest'  => true,
-			'supports'      => array(
-				'editor',
-				'comments',
-				'author',
-				'custom-fields',
-
-				// Webmentions, pingbacks, and trackbacks are required to fully
-				// support webmentions until I figure out that I'm wrong.
-				'webmentions',
-				'pingbacks',
-				'trackbacks',
-			),
-			'has_archive'   => true,
-			'rewrite'       => array(
-				'slug' => 'notes',
-			),
-		)
+		$post_type_args
 	);
 }
 

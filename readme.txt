@@ -63,6 +63,10 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### Unreleased
+
+* Add a `shortnotes_post_type_arguments` filter.
+
 ### 1.2.0
 
 * Fix a bug in title generation when an image block is followed by a paragraph.
