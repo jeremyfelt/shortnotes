@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 5.9
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -63,9 +63,11 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
-### Unreleased
+### 1.3.0
 
 * Add a `shortnotes_post_type_arguments` filter.
+* Fix a minor documentation issue.
+* Update `@wordpress/scripts` dependency to 23.0.0.
 
 ### 1.2.0
 

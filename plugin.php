@@ -7,7 +7,7 @@
  * Author URI:      https://jeremyfelt.com
  * Text Domain:     shortnotes
  * Domain Path:     /languages
- * Version:         1.2.0
+ * Version:         1.3.0
  */
 
 // If this file is called directly, abort.

@@ -55,9 +55,11 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
-### Unreleased
+### 1.3.0
 
 * Add a `shortnotes_post_type_arguments` filter.
+* Fix a minor documentation issue.
+* Update `@wordpress/scripts` dependency to 23.0.0.
 
 ### 1.2.0
 
