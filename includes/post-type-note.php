@@ -216,7 +216,7 @@ function generate_sub_title( $html ) {
  * Format the note's title to be slightly more descriptive and provide a
  * bit more information about the note.
  *
- * @param array A list of data about the note.
+ * @param array $post_data A list of data about the note.
  * @return string The formatted title.
  */
 function get_formatted_title( $post_data ) {
