@@ -2,8 +2,8 @@
 Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
-Tested up to: 5.9
-Stable tag: 1.3.0
+Tested up to: 6.0
+Stable tag: 1.3.1
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -62,6 +62,11 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.3.1
+
+* Update `@wordpress/scripts` dependency to 23.2.0.
+* Confirm WordPress 6.0 support.
 
 ### 1.3.0
 
