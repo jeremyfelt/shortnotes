@@ -1,4 +1,9 @@
 <?php
+/**
+ * Manage the shortnote post type.
+ *
+ * @package shortnotes
+ */
 
 namespace ShortNotes\PostType\Note;
 
@@ -27,7 +32,7 @@ function register_post_type() {
 		'labels'        => array(
 			'name'                     => __( 'Notes', 'shortnotes' ),
 			'singular_name'            => __( 'Note', 'shortnotes' ),
-			'add_new'                  => __( 'Add New' ),
+			'add_new'                  => __( 'Add New', 'shortnotes' ),
 			'add_new_item'             => __( 'Add New Note', 'shortnotes' ),
 			'edit_item'                => __( 'Edit Note', 'shortnotes' ),
 			'new_item'                 => __( 'New Note', 'shortnotes' ),
@@ -326,7 +331,7 @@ function get_reply_to_markup( $post ) {
 	 */
 	$reply_to_name = apply_filters( 'shortnotes_reply_to_name', $reply_to_name, $post, $reply_to_url );
 
-	$reply_to_markup = '<p class="shortnotes-reply-to">' . __( 'In reply to:' ) . ' <a class="u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . esc_html( $reply_to_name ) . '</a></p>';
+	$reply_to_markup = '<p class="shortnotes-reply-to">' . __( 'In reply to:', 'shortnotes' ) . ' <a class="u-in-reply-to" href="' . esc_url( $reply_to_url ) . '">' . esc_html( $reply_to_name ) . '</a></p>';
 
 	return $reply_to_markup;
 }
