@@ -1,4 +1,9 @@
 <?php
+/**
+ * Manage the plugin.
+ *
+ * @package shortnotes
+ */
 
 namespace ShortNotes\Common;
 
@@ -22,5 +27,4 @@ function enqueue_block_editor_assets() {
 		$assets['version'],
 		true
 	);
-
 }

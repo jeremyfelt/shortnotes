@@ -1,4 +1,9 @@
 <?php
+/**
+ * Manage how shortnotes communicates via webmention.
+ *
+ * @package shortnotes
+ */
 
 namespace ShortNotes\Webmention;
 

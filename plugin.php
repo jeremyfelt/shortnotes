@@ -8,6 +8,8 @@
  * Text Domain:     shortnotes
  * Domain Path:     /languages
  * Version:         1.3.1
+ *
+ * @package shortnotes
  */
 
 // If this file is called directly, abort.
