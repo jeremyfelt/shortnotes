@@ -5,18 +5,18 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 const NoteTypeSideBarPanel = () => {
-	const meta = useSelect((select) =>
-		select('core/editor').getEditedPostAttribute('meta')
+	const meta = useSelect( ( select ) =>
+		select( 'core/editor' ).getEditedPostAttribute( 'meta' )
 	);
 
-	const { editPost } = useDispatch('core/editor');
+	const { editPost } = useDispatch( 'core/editor' );
 
-	const setMetaValue = (key, value) => {
-		editPost({
+	const setMetaValue = ( key, value ) => {
+		editPost( {
 			meta: {
-				[key]: value,
+				[ key ]: value,
 			},
-		});
+		} );
 	};
 
 	/**
@@ -26,12 +26,12 @@ const NoteTypeSideBarPanel = () => {
 	 * @param {*} metaData The meta data object.
 	 * @return {string} The note type.
 	 */
-	const getNoteType = (metaData) => {
-		if ('' !== metaData.shortnotes_reply_to_url) {
+	const getNoteType = ( metaData ) => {
+		if ( '' !== metaData.shortnotes_reply_to_url ) {
 			return 'reply';
 		}
 
-		if ('' === metaData.shortnotes_note_type) {
+		if ( '' === metaData.shortnotes_note_type ) {
 			return 'note';
 		}
 
@@ -41,51 +41,51 @@ const NoteTypeSideBarPanel = () => {
 	return (
 		<PluginDocumentSettingPanel
 			name="note-type-panel"
-			title={__('Note data', 'shortnotes')}
-			icon={false}
+			title={ __( 'Note data', 'shortnotes' ) }
+			icon={ false }
 		>
 			<SelectControl
-				label={__('Note type', 'shortnotes')}
-				value={getNoteType(meta)}
-				options={[
+				label={ __( 'Note type', 'shortnotes' ) }
+				value={ getNoteType( meta ) }
+				options={ [
 					{ label: 'Note', value: 'note' },
 					{ label: 'Reply', value: 'reply' },
-				]}
-				onChange={(value) =>
-					setMetaValue('shortnotes_note_type', value)
+				] }
+				onChange={ ( value ) =>
+					setMetaValue( 'shortnotes_note_type', value )
 				}
 			/>
-			{'reply' === getNoteType(meta) && (
+			{ 'reply' === getNoteType( meta ) && (
 				<>
 					<TextControl
-						label={__('Reply to URL', 'shortnotes')}
-						help={__(
+						label={ __( 'Reply to URL', 'shortnotes' ) }
+						help={ __(
 							'Enter the URL to which this note is a reply',
 							'shortnotes'
-						)}
-						value={meta.shortnotes_reply_to_url}
-						onChange={(value) =>
-							setMetaValue('shortnotes_reply_to_url', value)
+						) }
+						value={ meta.shortnotes_reply_to_url }
+						onChange={ ( value ) =>
+							setMetaValue( 'shortnotes_reply_to_url', value )
 						}
 					/>
 					<TextControl
-						label={__('Reply to name (optional)', 'shortnotes')}
-						help={__(
+						label={ __( 'Reply to name (optional)', 'shortnotes' ) }
+						help={ __(
 							'Enter a name this reply is directed to. Defaults to "this post".',
 							'shortnotes'
-						)}
-						value={meta.shortnotes_reply_to_name}
-						onChange={(value) =>
-							setMetaValue('shortnotes_reply_to_name', value)
+						) }
+						value={ meta.shortnotes_reply_to_name }
+						onChange={ ( value ) =>
+							setMetaValue( 'shortnotes_reply_to_name', value )
 						}
 					/>
 				</>
-			)}
+			) }
 		</PluginDocumentSettingPanel>
 	);
 };
 
-registerPlugin('note-type-panel', {
+registerPlugin( 'note-type-panel', {
 	render: NoteTypeSideBarPanel,
 	icon: '',
-});
+} );
