@@ -51,4 +51,9 @@
 	<rule ref="Generic.Arrays.DisallowShortArraySyntax">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 	</rule>
+
+	<!-- I'm tired of Yoda, y'all. -->
+	<rule ref="WordPress.PHP.YodaConditions">
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+	</rule>
 </ruleset>
