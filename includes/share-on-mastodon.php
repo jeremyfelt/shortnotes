@@ -7,6 +7,8 @@
 
 namespace ShortNotes\ShareOnMastodon;
 
+use Shortnotes\PostType\Note;
+
 add_filter( 'share_on_mastodon_status', __NAMESPACE__ . '\filter_status_text', 10, 2 );
 
 /**
@@ -16,7 +18,7 @@ add_filter( 'share_on_mastodon_status', __NAMESPACE__ . '\filter_status_text', 1
  * @param \WP_Post $post The post object.
  */
 function filter_args( array $args, \WP_Post $post ) : array {
-	if ( 'shortnote' !== $post->post_type ) {
+	if ( Note\get_slug() !== $post->post_type ) {
 		return $args;
 	}
 
