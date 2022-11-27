@@ -288,7 +288,7 @@ function filter_wp_insert_post_data( $post_data ) {
 		$post_data['post_name']  = substr( wp_generate_uuid4(), 0, 4 ) . time();
 	}
 
-	if ( 'publish' === $post_data['post_status'] ) {
+	if ( in_array( $post_data['post_status'], [ 'publish', 'future' ], true ) ) {
 		$post_data['post_title'] = get_formatted_title( $post_data );
 	}
 
