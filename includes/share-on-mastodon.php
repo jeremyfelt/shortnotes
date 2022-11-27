@@ -28,23 +28,47 @@ function filter_args( array $args, \WP_Post $post ) : array {
 		return $args;
 	}
 
-	$reply_host = wp_parse_url( $reply_to_url, PHP_URL_HOST );
-	$mastodon   = get_user_meta( $post->post_author, 'mastodon', true );
+	$status_id = get_reply_to_id( $reply_to_url );
 
-	if ( ! $mastodon || $reply_host !== wp_parse_url( $mastodon, PHP_URL_HOST ) ) {
-		return $args;
+	if ( 0 < $status_id ) {
+		$args['in_reply_to_id'] = $status_id;
 	}
-
-	$path = trim( wp_parse_url( $reply_to_url, PHP_URL_PATH ), '/' );
-	$path = explode( '/', $path );
-
-	if ( 3 !== count( $path ) || 'web' !== $path[0] || ! is_numeric( $path[2] ) ) {
-		return $args;
-	}
-
-	$args['in_reply_to_id'] = $path[2];
 
 	return $args;
+}
+
+/**
+ * Retrieve the reply to ID for a Mastodon status URL.
+ *
+ * @param string $url The Mastodon status URL.
+ * @return int The status ID if available. 0 if not.
+ */
+function get_reply_to_id( string $url ) : int {
+	$url_parts = wp_parse_url( $url );
+
+	if ( ! isset( $url_parts['path'] ) ) {
+		return 0;
+	}
+
+	$result = wp_remote_head( $url );
+
+	if ( is_wp_error( $result ) ) {
+		return 0;
+	}
+
+	$server = strtolower( wp_remote_retrieve_header( $result, 'server' ) );
+
+	if ( 'mastodon' !== $server ) {
+		return 0;
+	}
+
+	$path_parts = explode( '/', trim( $url_parts['path'], '/' ) );
+
+	if ( 2 !== count( $path_parts ) || ! is_numeric( $path_parts[1] ) ) {
+		return 0;
+	}
+
+	return (int) $path_parts[1];
 }
 
 /**
