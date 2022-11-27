@@ -55,6 +55,15 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.4.0
+
+* Integrate with [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/) plugin to send notes to Mastodon:
+  * Full note text is sent to Mastodon with stripped HTML.
+  * If a repy to URL is a Mastodon post, it will appear as a reply in Mastodon.
+* Fix an issue where titles did not generate as expected on scheduled notes.
+* Update `@wordpress/scripts` dependency to 24.6.0.
+* Confirm WordPress 6.1 support.
+
 ### 1.3.1
 
 * Update `@wordpress/scripts` dependency to 23.2.0.

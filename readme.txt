@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -62,6 +62,15 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.4.0
+
+* Integrate with [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/) plugin to send notes to Mastodon:
+  * Full note text is sent to Mastodon with stripped HTML.
+  * If a repy to URL is a Mastodon post, it will appear as a reply in Mastodon.
+* Fix an issue where titles did not generate as expected on scheduled notes.
+* Update `@wordpress/scripts` dependency to 24.6.0.
+* Confirm WordPress 6.1 support.
 
 ### 1.3.1
 
