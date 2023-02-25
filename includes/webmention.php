@@ -17,7 +17,7 @@ add_filter( 'webmention_links', __NAMESPACE__ . '\filter_webmention_links', 10, 
  *
  * @param int $post_id The post ID of the note.
  */
-function schedule( $post_id ) {
+function schedule( int $post_id ) {
 	if ( defined( 'WP_IMPORTING' ) || false === class_exists( 'Webmention_Sender' ) ) {
 		return;
 	}
@@ -32,7 +32,7 @@ function schedule( $post_id ) {
  *
  * @param int $post_id The post ID of the note.
  */
-function send( $post_id ) {
+function send( int $post_id ) {
 	$post = get_post( $post_id );
 
 	if ( \ShortNotes\PostType\Note\get_slug() === $post->post_type && class_exists( 'Webmention_Sender' ) ) {
@@ -48,7 +48,7 @@ function send( $post_id ) {
  * @param int   $post_id The current post.
  * @return array A modified list of URLs.
  */
-function filter_webmention_links( $urls, $post_id ) {
+function filter_webmention_links( array $urls, int $post_id ): array {
 	$post = get_post( $post_id );
 
 	if ( \ShortNotes\PostType\Note\get_slug() !== $post->post_type ) {

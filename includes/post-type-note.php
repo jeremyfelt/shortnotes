@@ -165,7 +165,7 @@ function register_meta() {
  * @param \WP_Post $post                The current note.
  * @return array A modified list of allowed block types.
  */
-function filter_allowed_block_types( $allowed_block_types, $post ) {
+function filter_allowed_block_types( array $allowed_block_types, \WP_Post $post ): array {
 	if ( get_slug() === $post->post_type ) {
 		return array(
 			'core/code',
@@ -204,7 +204,7 @@ function get_placeholder_title() {
  * @param string $html Markup.
  * @return string Generated subtitle.
  */
-function generate_sub_title( $html ) {
+function generate_sub_title( string $html ): string {
 	$sub_title = wp_strip_all_tags( $html );
 
 	// At the risk of being complicated, determine the length of the translated "Note" pretext so
@@ -224,7 +224,7 @@ function generate_sub_title( $html ) {
  * @param array $post_data A list of data about the note.
  * @return string The formatted title.
  */
-function get_formatted_title( $post_data ) {
+function get_formatted_title( array $post_data ): string {
 	$blocks = parse_blocks( $post_data['post_content'] );
 
 	// Retrieve the site's preferred date and time formats.
@@ -278,7 +278,7 @@ function get_formatted_title( $post_data ) {
  * @param array $post_data A list of data about the post to be updated.
  * @return array $post_data A modified list of post data.
  */
-function filter_wp_insert_post_data( $post_data ) {
+function filter_wp_insert_post_data( array $post_data ): array {
 	if ( get_slug() !== $post_data['post_type'] ) {
 		return $post_data;
 	}
@@ -303,7 +303,7 @@ function filter_wp_insert_post_data( $post_data ) {
  * @param \WP_Post $post A shortnote's post object.
  * @return string Markup to use for a u-in-reply-to.
  */
-function get_reply_to_markup( $post ) {
+function get_reply_to_markup( \WP_Post $post ): string {
 	if ( get_slug() !== $post->post_type ) {
 		return '';
 	}
@@ -365,7 +365,7 @@ function reply_to_markup() {
  * @param string $content The current content.
  * @return string The content, possibly prepended with additional markup.
  */
-function prepend_reply_to_markup( $content ) {
+function prepend_reply_to_markup( string $content ): string {
 	if ( is_admin() ) {
 		return $content;
 	}

@@ -78,7 +78,7 @@ function get_reply_to_id( string $url ) : int {
  * @param \WP_Post $post   The post object.
  * @return string The modified status text.
  */
-function filter_status_text( $status, $post ) {
+function filter_status_text( string $status, \WP_Post $post ): string {
 	$status = apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	$status = trim( $status );
 	$status = convert_anchors( $status );
