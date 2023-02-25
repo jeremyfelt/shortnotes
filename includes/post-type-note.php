@@ -161,11 +161,11 @@ function register_meta() {
  * Note: There's nothing horrible about allowing more blocks. Unhooking this
  *       function from the `allowed_block_types` filter won't cause any trouble.
  *
- * @param array    $allowed_block_types A list of allowed block types.
- * @param \WP_Post $post                The current note.
+ * @param bool|array $allowed_block_types A list of allowed block types. Boolean true by default.
+ * @param \WP_Post   $post                The current note.
  * @return array A modified list of allowed block types.
  */
-function filter_allowed_block_types( array $allowed_block_types, \WP_Post $post ): array {
+function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 	if ( get_slug() === $post->post_type ) {
 		return array(
 			'core/code',
