@@ -2,12 +2,17 @@
 	"name": "jeremyfelt/shortnotes",
 	"type": "wordpress-plugin",
 	"minimum-stability": "stable",
+	"require": {
+		"php": ">=5.6",
+		"ext-json": "*"
+	  },
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^2.0",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-		"phpcompatibility/php-compatibility": "^9.3",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"phpunit/phpunit": "^5 || ^7 || ^8 || ^9",
+		"sirbrillig/phpcs-variable-analysis": "*",
+		"squizlabs/php_codesniffer": "3.*",
+		"wp-coding-standards/wpcs": "*",
 		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"scripts": {
