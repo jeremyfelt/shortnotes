@@ -80,17 +80,7 @@ function get_reply_to_id( string $url ) : int {
  */
 function filter_status_text( string $status, \WP_Post $post ): string {
 	$status = apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-	$status = trim( $status );
-	$status = convert_anchors( $status );
-
-	$status = str_replace( '<p>', '', $status );
-	$status = substr_replace( $status, ' ', strrpos( $status, '</p>' ), 4 );
-	$status = str_replace( '</p>', "\n\n", $status );
-
-	// Do what the plugin does to the title, but to the rendered content.
-	$status = wp_strip_all_tags(
-		html_entity_decode( $status, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) ) // Avoid double-encoded HTML entities.
-	);
+	$status = transform_content( $status );
 
 	// Remove more than two contiguous line breaks. Thanks, wpautop!
 	$status = preg_replace( "/\n\n+/", "\n\n", $status );
@@ -109,9 +99,9 @@ function filter_status_text( string $status, \WP_Post $post ): string {
  * Parse and move anchors to the end of post content.
  *
  * @param string $html The post content.
- * @return string Modified post content.
+ * @return array Modified post content.
  */
-function convert_anchors( string $html ) : string {
+function extract_links( string $html ): array {
 	preg_match_all( '/<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1/', $html, $matches );
 
 	$links = array_filter(
@@ -121,5 +111,70 @@ function convert_anchors( string $html ) : string {
 		}
 	);
 
-	return $html . implode( ' ', $links );
+	return $links;
+}
+
+/**
+ * Strip all HTML tags from a string and avoid double-encoded HTML entities.
+ *
+ * @param string $html The HTML.
+ * @return string The text.
+ */
+function strip_html( string $html ): string {
+	return wp_strip_all_tags(
+		html_entity_decode( $html, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) ) // Avoid double-encoded HTML entities.
+	);
+}
+
+/**
+ * Recursively transform an individual block and its inner blocks into an
+ * opinionated text-only version.
+ *
+ * @param array $block The WordPress block to transform.
+ * @return string The block represented in text.
+ */
+function transform_block( array $block ): string {
+	if ( null === $block['blockName'] && '' === trim( $block['innerHTML'] ) ) {
+		return '';
+	}
+
+	$content = '';
+
+	if ( 'core/quote' === $block['blockName'] ) {
+		// Quotes start and end with a double curly quotation mark.
+		$content .= '“';
+
+		foreach ( $block['innerBlocks'] as $inner_block ) {
+			$content .= transform_block( $inner_block );
+		}
+
+		// Quotes use a dash before the citation is appended.
+		$content .= '” - ';
+		$content .= strip_html( trim( $block['innerHTML'] ) );
+	} else {
+		$content .= strip_html( trim( $block['innerHTML'] ) );
+	}
+
+	return $content;
+}
+
+/**
+ * Transform WordPress flavored HTML from note content to an opinionated text
+ * format for sharing on text-based services like Mastodon.
+ *
+ * @param string $html The original note HTML.
+ * @return string The content as plain text, whatever that means.
+ */
+function transform_content( string $html ): string {
+	$blocks  = parse_blocks( trim( $html ) );
+	$links   = extract_links( $html );
+	$content = '';
+
+	foreach ( $blocks as $block ) {
+		$content .= transform_block( $block );
+	}
+
+	$content .= 0 < count( $links ) ? ' ' . implode( ' ', $links ) : '';
+
+	return $content;
 }
