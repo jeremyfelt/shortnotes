@@ -110,6 +110,32 @@ class TestShareOnMastodon extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A set of paragraphs should render as text with two new lines separating
+	 * each paragraph.
+	 */
+	public function test_transform_multiple_paragraphs_with_multiple_links() {
+		ob_start();
+		?>
+<!-- wp:paragraph -->
+<p>There's no obvious way to report a factual error as not actually an error in IMDB, so I'll shout into the void because <a href="https://xkcd.com/386/">duty calls</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><em><a href="https://en.m.wikipedia.org/wiki/The_Banshees_of_Inisherin">The Banshees of Inisherin</a></em> is set in 1923 and on the pub wall in one scene is an advertisement for Irish whisky, no “e”.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is most likely accurate, as there was no “e” in Irish whisky for a long time before there was an “e” and the introduction of the “e” <a href="https://www.forbes.com/sites/joemicallef/2018/05/17/is-it-whisky-or-whiskey-and-why-it-matters/?sh=75a61d1c7561">happened at a very slow pace</a>.</p>
+<!-- /wp:paragraph -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = "There's no obvious way to report a factual error as not actually an error in IMDB, so I'll shout into the void because duty calls.\n\nThe Banshees of Inisherin is set in 1923 and on the pub wall in one scene is an advertisement for Irish whisky, no “e”.\n\nThis is most likely accurate, as there was no “e” in Irish whisky for a long time before there was an “e” and the introduction of the “e” happened at a very slow pace. https://xkcd.com/386/ https://en.m.wikipedia.org/wiki/The_Banshees_of_Inisherin https://www.forbes.com/sites/joemicallef/2018/05/17/is-it-whisky-or-whiskey-and-why-it-matters/?sh=75a61d1c7561";
+		$transformed_text = \ShortNotes\ShareOnMastodon\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * A single quote block containing a single paragraph and a citation should
 	 * render as text surrounded with curly quotes.
 	 */

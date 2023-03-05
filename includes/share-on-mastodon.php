@@ -168,14 +168,18 @@ function transform_block( array $block ): string {
  * @return string The content as plain text, whatever that means.
  */
 function transform_content( string $html ): string {
-	$blocks  = parse_blocks( trim( $html ) );
-	$links   = extract_links( $html );
-	$content = '';
+	$blocks        = parse_blocks( trim( $html ) );
+	$links         = extract_links( $html );
+	$content_parts = [];
 
 	foreach ( $blocks as $block ) {
-		$content .= transform_block( $block );
+		$block_text = transform_block( $block );
+		if ( '' !== $block_text ) {
+			$content_parts[] = $block_text;
+		}
 	}
 
+	$content  = implode( "\n\n", $content_parts );
 	$content .= 0 < count( $links ) ? ' ' . implode( ' ', $links ) : '';
 
 	return $content;
