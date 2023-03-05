@@ -151,6 +151,8 @@ function transform_block( array $block ): string {
 		// Quotes use a dash before the citation is appended.
 		$content .= '” - ';
 		$content .= strip_html( trim( $block['innerHTML'] ) );
+	} elseif ( 'core/embed' === $block['blockName'] ) {
+		$content .= $block['attrs']['url'] ?? '';
 	} else {
 		$content .= strip_html( trim( $block['innerHTML'] ) );
 	}

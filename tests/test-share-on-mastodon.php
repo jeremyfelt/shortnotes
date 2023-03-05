@@ -153,4 +153,23 @@ Have to do -----</pre>
 
 		$this->assertEquals( $expected_text, $transformed_text );
 	}
+
+	/**
+	 * An embedded video should transform to a link to the video.
+	 */
+	public function test_convert_single_video_embed_block_to_url() {
+		ob_start();
+		?>
+<!-- wp:embed {"url":"https://www.youtube.com/watch?v=5NPBIwQyPWE","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-4-3 wp-has-aspect-ratio"} -->
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-4-3 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+https://www.youtube.com/watch?v=5NPBIwQyPWE
+</div></figure>
+<!-- /wp:embed -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = 'https://www.youtube.com/watch?v=5NPBIwQyPWE';
+		$transformed_text = \Shortnotes\ShareOnMastodon\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
 }
