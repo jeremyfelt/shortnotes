@@ -377,3 +377,23 @@ function prepend_reply_to_markup( string $content ): string {
 
 	return $content;
 }
+
+/**
+ * Retrieve a note by its post_name value (the slug used in the URL).
+ *
+ * @param string $post_name A note's post_name.
+ * @return int The post ID for the note. 0 if not found.
+ */
+function get_note_by_post_name( string $post_name ): int {
+	global $wpdb;
+
+	$post_id = (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT ID from $wpdb->posts WHERE post_type = %s AND post_name = %s LIMIT 1",
+			get_slug(),
+			sanitize_key( $post_name )
+		)
+	);
+
+	return $post_id;
+}

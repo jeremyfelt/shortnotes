@@ -38,31 +38,65 @@ function filter_args( array $args, \WP_Post $post ) : array {
 }
 
 /**
+ * Determine if the server hosting a URL is powered by Mastodon.
+ *
+ * @param string $url The URL.
+ * @return bool True if Mastodon. False if not.
+ */
+function is_mastodon_server( string $url ): bool {
+	$result = wp_remote_head( $url );
+
+	if ( is_wp_error( $result ) ) {
+		return false;
+	}
+
+	$server = strtolower( wp_remote_retrieve_header( $result, 'server' ) );
+
+	return 'mastodon' === $server;
+}
+
+/**
  * Retrieve the reply to ID for a Mastodon status URL.
  *
  * @param string $url The Mastodon status URL.
  * @return int The status ID if available. 0 if not.
  */
 function get_reply_to_id( string $url ) : int {
-	$url_parts = wp_parse_url( $url );
+	$site_host = wp_parse_url( home_url(), PHP_URL_HOST );
+	$url_host  = wp_parse_url( $url, PHP_URL_HOST );
+	$url_path  = wp_parse_url( $url, PHP_URL_PATH );
 
-	if ( ! isset( $url_parts['path'] ) ) {
+	if ( ! $url_path ) {
 		return 0;
 	}
 
-	$result = wp_remote_head( $url );
+	if ( $site_host === $url_host ) {
+		$path_parts = explode( '/', trim( $url_path, '/' ) );
+		$post_name  = array_pop( $path_parts ); // Huge assumptions are okay with me!
+		$post_id    = Note\get_note_by_post_name( $post_name );
 
-	if ( is_wp_error( $result ) ) {
+		// No note was found.
+		if ( ! $post_id ) {
+			return 0;
+		}
+
+		// Override the URL with the note's previously stored Mastodon URL.
+		$url = get_post_meta( $post_id, '_share_on_mastodon_url', true );
+
+		if ( ! $url ) {
+			return 0;
+		}
+
+		$url_path = wp_parse_url( $url, PHP_URL_PATH );
+
+		if ( ! $url_path ) {
+			return 0;
+		}
+	} elseif ( false === is_mastodon_server( $url ) ) {
 		return 0;
 	}
 
-	$server = strtolower( wp_remote_retrieve_header( $result, 'server' ) );
-
-	if ( 'mastodon' !== $server ) {
-		return 0;
-	}
-
-	$path_parts = explode( '/', trim( $url_parts['path'], '/' ) );
+	$path_parts = explode( '/', trim( $url_path, '/' ) );
 
 	if ( 2 !== count( $path_parts ) || ! is_numeric( $path_parts[1] ) ) {
 		return 0;
