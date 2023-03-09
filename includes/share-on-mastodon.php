@@ -10,6 +10,7 @@ namespace ShortNotes\ShareOnMastodon;
 use Shortnotes\PostType\Note;
 
 add_filter( 'share_on_mastodon_status', __NAMESPACE__ . '\filter_status_text', 10, 2 );
+add_filter( 'share_on_mastodon_toot_args', __NAMESPACE__ . '\filter_args', 10, 2 );
 
 /**
  * Filter Mastodon toot args to include a reply to ID if it exists.
@@ -114,13 +115,6 @@ function get_reply_to_id( string $url ) : int {
  */
 function filter_status_text( string $status, \WP_Post $post ): string {
 	$status = transform_content( $post->post_content );
-
-	add_filter(
-		'share_on_mastodon_toot_args',
-		function( $args ) use ( $post ) {
-			return filter_args( $args, $post );
-		}
-	);
 
 	return $status;
 }

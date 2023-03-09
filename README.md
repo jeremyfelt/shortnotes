@@ -63,6 +63,8 @@ Those adjustments (a) remove the display of a title for the note post type and (
   * Improve transformation of paragraph blocks.
   * Improve extraction of anchor hrefs from markup.
 * Properly reply to a previous note's corresponding Mastodon post.
+* Remove hacky filtering of Share on Mastodon.
+  * This is technically a back-compat break for Share on Mastodon <0.9.
 * Update `@wordpress/scripts` dependency to 25.5.1.
 
 ### 1.4.0
