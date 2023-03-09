@@ -241,6 +241,11 @@ function get_formatted_title( array $post_data ): string {
 
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
+		} elseif ( 'core/quote' === $block['blockName'] ) {
+			$sub_title = transform_content( $post_data['post_content'] );
+
+			// A quote has been found, use its plain text equivalent and move on.
+			break;
 		} elseif ( 'core/image' === $block['blockName'] ) {
 			$sub_title = __( 'Image posted on', 'shortnotes' ) . ' ' . $sub_title;
 		} elseif ( 'core/gallery' === $block['blockName'] ) {
@@ -396,4 +401,94 @@ function get_note_by_post_name( string $post_name ): int {
 	);
 
 	return $post_id;
+}
+
+/**
+ * Parse and move anchors to the end of post content.
+ *
+ * @param string $html The post content.
+ * @return array Modified post content.
+ */
+function extract_links( string $html ): array {
+	preg_match_all( '/<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1/', $html, $matches );
+
+	$links = array_filter(
+		$matches[2],
+		function( $link ) {
+			return wp_parse_url( $link, PHP_URL_HOST );
+		}
+	);
+
+	return $links;
+}
+
+/**
+ * Strip all HTML tags from a string and avoid double-encoded HTML entities.
+ *
+ * @param string $html The HTML.
+ * @return string The text.
+ */
+function strip_html( string $html ): string {
+	return wp_strip_all_tags(
+		html_entity_decode( $html, ENT_QUOTES | ENT_HTML5, get_bloginfo( 'charset' ) ) // Avoid double-encoded HTML entities.
+	);
+}
+
+/**
+ * Recursively transform an individual block and its inner blocks into an
+ * opinionated text-only version.
+ *
+ * @param array $block The WordPress block to transform.
+ * @return string The block represented in text.
+ */
+function transform_block( array $block ): string {
+	if ( null === $block['blockName'] && '' === trim( $block['innerHTML'] ) ) {
+		return '';
+	}
+
+	$content = '';
+
+	if ( 'core/quote' === $block['blockName'] ) {
+		// Quotes start and end with a double curly quotation mark.
+		$content .= '“';
+
+		foreach ( $block['innerBlocks'] as $inner_block ) {
+			$content .= transform_block( $inner_block );
+		}
+
+		// Quotes use a dash before the citation is appended.
+		$content .= '” - ';
+		$content .= strip_html( trim( $block['innerHTML'] ) );
+	} elseif ( 'core/embed' === $block['blockName'] ) {
+		$content .= $block['attrs']['url'] ?? '';
+	} else {
+		$content .= strip_html( trim( $block['innerHTML'] ) );
+	}
+
+	return $content;
+}
+
+/**
+ * Transform WordPress flavored HTML from note content to an opinionated text
+ * format for sharing on text-based services like Mastodon.
+ *
+ * @param string $html The original note HTML.
+ * @return string The content as plain text, whatever that means.
+ */
+function transform_content( string $html ): string {
+	$blocks        = parse_blocks( trim( $html ) );
+	$links         = extract_links( $html );
+	$content_parts = [];
+
+	foreach ( $blocks as $block ) {
+		$block_text = transform_block( $block );
+		if ( '' !== $block_text ) {
+			$content_parts[] = $block_text;
+		}
+	}
+
+	$content  = implode( "\n\n", $content_parts );
+	$content .= 0 < count( $links ) ? ' ' . implode( ' ', $links ) : '';
+
+	return $content;
 }
