@@ -65,6 +65,7 @@ Those adjustments (a) remove the display of a title for the note post type and (
 * Properly reply to a previous note's corresponding Mastodon post.
 * Remove hacky filtering of Share on Mastodon.
   * This is technically a back-compat break for Share on Mastodon <0.9.
+* Use the quote block to generate a note title, if available.
 * Update `@wordpress/scripts` dependency to 25.5.1.
 
 ### 1.4.0
