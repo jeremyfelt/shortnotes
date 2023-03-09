@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 6.1
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -62,6 +62,19 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.5.0
+
+* Improve text formatting of notes posted to Mastodon through [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/):
+  * Transform quote block to a text representation of the quote and citation.
+  * Transform embed blocks to a raw URL.
+  * Improve transformation of paragraph blocks.
+  * Improve extraction of anchor hrefs from markup.
+* Properly reply to a previous note's corresponding Mastodon post.
+* Remove hacky filtering of Share on Mastodon.
+  * This is technically a back-compat break for Share on Mastodon <0.9.
+* Use the quote block to generate a note title, if available.
+* Update `@wordpress/scripts` dependency to 25.5.1.
 
 ### 1.4.0
 
