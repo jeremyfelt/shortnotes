@@ -79,11 +79,7 @@ function get_reply_to_id( string $url ) : int {
  * @return string The modified status text.
  */
 function filter_status_text( string $status, \WP_Post $post ): string {
-	$status = apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-	$status = transform_content( $status );
-
-	// Remove more than two contiguous line breaks. Thanks, wpautop!
-	$status = preg_replace( "/\n\n+/", "\n\n", $status );
+	$status = transform_content( $post->post_content );
 
 	add_filter(
 		'share_on_mastodon_toot_args',
