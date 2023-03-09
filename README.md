@@ -55,6 +55,15 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.5.0
+
+* Improve notes posted to Mastodon through [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/):
+  * Transform quote block to a text representation of the quote and citation.
+  * Transform embed blocks to a raw URL.
+  * Improve transformation of paragraph blocks.
+  * Improve extraction of anchor hrefs from markup.
+* Update `@wordpress/scripts` dependency to 25.5.1.
+
 ### 1.4.0
 
 * Integrate with [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/) plugin to send notes to Mastodon:
