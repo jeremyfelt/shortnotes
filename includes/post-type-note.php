@@ -241,6 +241,11 @@ function get_formatted_title( array $post_data ): string {
 
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
+		} elseif ( 'core/quote' === $block['blockName'] ) {
+			$sub_title = transform_content( $post_data['post_content'] );
+
+			// A quote has been found, use its plain text equivalent and move on.
+			break;
 		} elseif ( 'core/image' === $block['blockName'] ) {
 			$sub_title = __( 'Image posted on', 'shortnotes' ) . ' ' . $sub_title;
 		} elseif ( 'core/gallery' === $block['blockName'] ) {
