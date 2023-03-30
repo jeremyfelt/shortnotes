@@ -2,7 +2,7 @@
 Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 1.5.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
