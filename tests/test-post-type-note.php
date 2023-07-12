@@ -156,6 +156,26 @@ Have to do -----</pre>
 	}
 
 	/**
+	 * If a dash is prepended to a citation already, Shortnotes should not add another.
+	 */
+	public function test_convert_quote_block_with_dash_in_citation() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+		<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+		<p>I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.</p>
+		<!-- /wp:paragraph --><cite>- Me, <a href="https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/">3 years ago</a>, on open source maintenance</cite></blockquote>
+		<!-- /wp:quote -->
+		<?php
+		$pre_html = ob_get_clean();
+
+		$expected_text    = '“I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.” - Me, 3 years ago, on open source maintenance https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * An embedded video should transform to a link to the video.
 	 */
 	public function test_convert_single_video_embed_block_to_url() {

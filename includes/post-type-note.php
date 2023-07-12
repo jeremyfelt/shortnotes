@@ -459,9 +459,13 @@ function transform_block( array $block ): string {
 			$content .= transform_block( $inner_block );
 		}
 
-		// Quotes use a dash before the citation is appended.
-		$content .= '” - ';
-		$content .= strip_html( trim( $block['innerHTML'] ) );
+		$citation = trim( ltrim( trim( strip_html( $block['innerHTML'] ) ), '-' ) );
+
+		if ( '' !== $citation ) {
+			$content .= '” - ' . $citation;
+		} else {
+			$content .= '”';
+		}
 	} elseif ( 'core/embed' === $block['blockName'] ) {
 		$content .= $block['attrs']['url'] ?? '';
 	} else {
