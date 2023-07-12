@@ -207,6 +207,9 @@ function get_placeholder_title() {
 function generate_sub_title( string $html ): string {
 	$sub_title = wp_strip_all_tags( $html );
 
+	// Stripe newline characters.
+	$sub_title = str_replace( array( "\r", "\n" ), '', $sub_title );
+
 	// At the risk of being complicated, determine the length of the translated "Note" pretext so
 	// that we can build a maximum string of 50 characters.
 	$string_lenth = 50 - strlen( get_placeholder_title() );
@@ -242,7 +245,7 @@ function get_formatted_title( array $post_data ): string {
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
 		} elseif ( 'core/quote' === $block['blockName'] ) {
-			$sub_title = transform_content( $post_data['post_content'] );
+			$sub_title = generate_sub_title( '&ldquo;' . trim( $post_data['post_content'] ) );
 
 			// A quote has been found, use its plain text equivalent and move on.
 			break;

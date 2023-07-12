@@ -173,4 +173,58 @@ https://www.youtube.com/watch?v=5NPBIwQyPWE
 
 		$this->assertEquals( $expected_text, $transformed_text );
 	}
+
+	/**
+	 * A note with a single paragraph should have a title that starts with the paragraph text.
+	 */
+	public function test_generated_title_note_has_single_paragraph_block() {
+		ob_start();
+		?>
+		<!-- wp:paragraph -->
+		<p>Somebody should do the intro to Psycho as a web page</p>
+		<!-- /wp:paragraph -->
+		<?php
+		$content = ob_get_clean();
+
+		$post_id = self::factory()->post->create(
+			[
+				'post_type'    => Note\get_slug(),
+				'post_content' => $content,
+				'post_status'  => 'publish',
+			]
+		);
+
+		$this->assertEquals( 'Note: Somebody should do the intro to Psycho as a we&hellip;', get_the_title( $post_id ) );
+	}
+
+	/**
+	 * A note that begins with a quote block should have a title that starts with the quote text.
+	 */
+	public function test_generated_title_note_begins_with_quote_block() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.</p>
+<!-- /wp:paragraph --><cite>- Me, <a href="https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/">3 years ago</a>, on open source maintenance</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>I ran into this again, so I wrote this note so that I would run into it again.</p>
+<!-- /wp:paragraph -->
+		<?php
+		$content = ob_get_clean();
+
+		$post_id = self::factory()->post->create(
+			[
+				'post_type'    => Note\get_slug(),
+				'post_content' => $content,
+				'post_status'  => 'publish',
+			]
+		);
+
+		$post = get_post( $post_id );
+
+		$this->assertEquals( 'Note: &ldquo;I am not confident enough in the soluti&hellip;', $post->post_title );
+	}
 }
