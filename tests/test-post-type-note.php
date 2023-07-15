@@ -131,6 +131,28 @@ class TestPostTypeNote extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A preformatted block with <br> tags should render as text with line breaks.
+	 */
+	public function test_convert_preformatted_text() {
+		ob_start();
+		?>
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><a href="https://www.nytimes.com/games/digits">Digits</a> #2 (15/15⭐)<br>66 (66)   ✖➕➖➖➕<br>126 (126) ➖✖➗➖➕<br>234 (234) ✖✖➖✖➖<br>335 (335) ✖✖➕➖➖<br>476 (476) ✖➗✖➕➕</pre>
+<!-- /wp:preformatted -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = 'Digits #2 (15/15⭐)
+66 (66)   ✖➕➖➖➕
+126 (126) ➖✖➗➖➕
+234 (234) ✖✖➖✖➖
+335 (335) ✖✖➕➖➖
+476 (476) ✖➗✖➕➕ https://www.nytimes.com/games/digits';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * A single quote block containing a verse block and a citation should
 	 * render as text surrounded with curly quotes, and the link breaks from
 	 * the verse should be maintained.

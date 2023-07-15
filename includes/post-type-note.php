@@ -477,6 +477,16 @@ function transform_block( array $block ): string {
 		}
 	} elseif ( 'core/embed' === $block['blockName'] ) {
 		$content .= $block['attrs']['url'] ?? '';
+	} elseif ( 'core/preformatted' === $block['blockName'] ) {
+		// We should expect preservation of line breaks in preformatted blocks
+		// and some may appear as <br> tags by accident.
+		$content .= strip_html(
+			str_replace(
+				'<br>',
+				"\n",
+				trim( $block['innerHTML'] )
+			)
+		);
 	} else {
 		$content .= strip_html( trim( $block['innerHTML'] ) );
 	}
