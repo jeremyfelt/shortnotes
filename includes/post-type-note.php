@@ -174,6 +174,7 @@ function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 			'core/gallery',
 			'core/image',
 			'core/list',
+			'core/list-item',
 			'core/paragraph',
 			'core/preformatted',
 			'core/pullquote',
@@ -206,6 +207,9 @@ function get_placeholder_title() {
  */
 function generate_sub_title( string $html ): string {
 	$sub_title = wp_strip_all_tags( $html );
+
+	// Stripe newline characters.
+	$sub_title = str_replace( array( "\r", "\n" ), '', $sub_title );
 
 	// At the risk of being complicated, determine the length of the translated "Note" pretext so
 	// that we can build a maximum string of 50 characters.
@@ -242,7 +246,7 @@ function get_formatted_title( array $post_data ): string {
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
 		} elseif ( 'core/quote' === $block['blockName'] ) {
-			$sub_title = transform_content( $post_data['post_content'] );
+			$sub_title = generate_sub_title( '&ldquo;' . trim( $post_data['post_content'] ) );
 
 			// A quote has been found, use its plain text equivalent and move on.
 			break;
@@ -453,14 +457,47 @@ function transform_block( array $block ): string {
 		$content .= '“';
 
 		foreach ( $block['innerBlocks'] as $inner_block ) {
-			$content .= transform_block( $inner_block );
+			// Strip leading and trailing double quotation marks.
+			$content .= html_entity_decode(
+				preg_replace(
+					'/^(&quot;|&ldquo;|&rdquo;)|(&quot;|&ldquo;|&rdquo;)$/',
+					'',
+					htmlentities(
+						transform_block( $inner_block )
+					)
+				),
+			);
 		}
 
-		// Quotes use a dash before the citation is appended.
-		$content .= '” - ';
-		$content .= strip_html( trim( $block['innerHTML'] ) );
+		$citation = trim( ltrim( trim( strip_html( $block['innerHTML'] ) ), '-' ) );
+
+		if ( '' !== $citation ) {
+			$content .= '” - ' . $citation;
+		} else {
+			$content .= '”';
+		}
 	} elseif ( 'core/embed' === $block['blockName'] ) {
 		$content .= $block['attrs']['url'] ?? '';
+	} elseif ( 'core/preformatted' === $block['blockName'] ) {
+		// We should expect preservation of line breaks in preformatted blocks
+		// and some may appear as <br> tags by accident.
+		$content .= strip_html(
+			str_replace(
+				'<br>',
+				"\n",
+				trim( $block['innerHTML'] )
+			)
+		);
+	} elseif ( 'core/list' === $block['blockName'] ) {
+		$list_content = '';
+
+		foreach ( $block['innerBlocks'] as $inner_block ) {
+			$list_content .= transform_block( $inner_block );
+		}
+
+		$content .= rtrim( $list_content, "\n" );
+	} elseif ( 'core/list-item' === $block['blockName'] ) {
+		$content .= '- ' . strip_html( trim( $block['innerHTML'] ) ) . "\n";
 	} else {
 		$content .= strip_html( trim( $block['innerHTML'] ) );
 	}

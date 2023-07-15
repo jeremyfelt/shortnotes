@@ -131,6 +131,64 @@ class TestPostTypeNote extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A preformatted block with <br> tags should render as text with line breaks.
+	 */
+	public function test_convert_preformatted_text() {
+		ob_start();
+		?>
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted"><a href="https://www.nytimes.com/games/digits">Digits</a> #2 (15/15⭐)<br>66 (66)   ✖➕➖➖➕<br>126 (126) ➖✖➗➖➕<br>234 (234) ✖✖➖✖➖<br>335 (335) ✖✖➕➖➖<br>476 (476) ✖➗✖➕➕</pre>
+<!-- /wp:preformatted -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = 'Digits #2 (15/15⭐)
+66 (66)   ✖➕➖➖➕
+126 (126) ➖✖➗➖➕
+234 (234) ✖✖➖✖➖
+335 (335) ✖✖➕➖➖
+476 (476) ✖➗✖➕➕ https://www.nytimes.com/games/digits';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
+	 * A list block should render as text with a dash and a space at the start of each
+	 * list item.
+	 */
+	public function test_convert_list_block() {
+		ob_start();
+		?>
+		<!-- wp:paragraph -->
+<p>This is a list that should be preserved on Mastodon:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><!-- wp:list-item -->
+<li>Test item one</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Test item two</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Test item three</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>A dash and a space should be added to the front of each line.</p>
+<!-- /wp:paragraph -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = "This is a list that should be preserved on Mastodon:\n\n- Test item one\n- Test item two\n- Test item three\n\nA dash and a space should be added to the front of each line.";
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * A single quote block containing a verse block and a citation should
 	 * render as text surrounded with curly quotes, and the link breaks from
 	 * the verse should be maintained.
@@ -156,6 +214,26 @@ Have to do -----</pre>
 	}
 
 	/**
+	 * If a dash is prepended to a citation already, Shortnotes should not add another.
+	 */
+	public function test_convert_quote_block_with_dash_in_citation() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+		<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+		<p>I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.</p>
+		<!-- /wp:paragraph --><cite>- Me, <a href="https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/">3 years ago</a>, on open source maintenance</cite></blockquote>
+		<!-- /wp:quote -->
+		<?php
+		$pre_html = ob_get_clean();
+
+		$expected_text    = '“I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.” - Me, 3 years ago, on open source maintenance https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * An embedded video should transform to a link to the video.
 	 */
 	public function test_convert_single_video_embed_block_to_url() {
@@ -172,5 +250,78 @@ https://www.youtube.com/watch?v=5NPBIwQyPWE
 		$transformed_text = Note\transform_content( $pre_html );
 
 		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
+	 * A note with a quote that starts with double quotes should trim the extra double quotes.
+	 */
+	public function test_convert_trim_extra_double_quotes_from_note() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>"A quote in a note that starts and ends with a double quote character that should be removed because we add a double quote character."</p>
+<!-- /wp:paragraph --><cite>A test name</cite></blockquote>
+<!-- /wp:quote -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = '“A quote in a note that starts and ends with a double quote character that should be removed because we add a double quote character.” - A test name';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
+	 * A note with a single paragraph should have a title that starts with the paragraph text.
+	 */
+	public function test_generated_title_note_has_single_paragraph_block() {
+		ob_start();
+		?>
+		<!-- wp:paragraph -->
+		<p>Somebody should do the intro to Psycho as a web page</p>
+		<!-- /wp:paragraph -->
+		<?php
+		$content = ob_get_clean();
+
+		$post_id = self::factory()->post->create(
+			[
+				'post_type'    => Note\get_slug(),
+				'post_content' => $content,
+				'post_status'  => 'publish',
+			]
+		);
+
+		$this->assertEquals( 'Note: Somebody should do the intro to Psycho as a we&hellip;', get_the_title( $post_id ) );
+	}
+
+	/**
+	 * A note that begins with a quote block should have a title that starts with the quote text.
+	 */
+	public function test_generated_title_note_begins_with_quote_block() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>I am not confident enough in the solution to summon the future energy it may require to defend the change after all of the work has been done.</p>
+<!-- /wp:paragraph --><cite>- Me, <a href="https://jeremyfelt.com/2020/04/24/thoughts-for-the-weeks-end-18/">3 years ago</a>, on open source maintenance</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>I ran into this again, so I wrote this note so that I would run into it again.</p>
+<!-- /wp:paragraph -->
+		<?php
+		$content = ob_get_clean();
+
+		$post_id = self::factory()->post->create(
+			[
+				'post_type'    => Note\get_slug(),
+				'post_content' => $content,
+				'post_status'  => 'publish',
+			]
+		);
+
+		$post = get_post( $post_id );
+
+		$this->assertEquals( 'Note: &ldquo;I am not confident enough in the soluti&hellip;', $post->post_title );
 	}
 }
