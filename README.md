@@ -55,6 +55,16 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.6.0
+
+* Improve title generation when a note starts with a quote.
+* Improve text formatting of notes posted to Mastodon through [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/):
+  * Avoid duplicate dashes when a note with a quote is transformed for Mastodon.
+  * Remove leading and trailing double quotes of all flavors when a note with a quote is transformed for Mastodon.
+  * Ensure persisting line breaks for preformatted blocks with `<br>` tags.
+  * Improve handling of lists and list items when transforming content for Mastodon.
+* Update `@wordpress/scripts` dependency to 26.8.0.
+
 ### 1.5.0
 
 * Improve text formatting of notes posted to Mastodon through [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/):

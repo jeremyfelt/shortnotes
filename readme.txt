@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 5.6
 Tested up to: 6.2
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -62,6 +62,16 @@ If you do find yourself wanting to customize, I have made [adjustments to my sit
 Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
 
 ## Changelog
+
+### 1.6.0
+
+* Improve title generation when a note starts with a quote.
+* Improve text formatting of notes posted to Mastodon through [Share on Mastodon](https://wordpress.org/plugins/share-on-mastodon/):
+  * Avoid duplicate dashes when a note with a quote is transformed for Mastodon.
+  * Remove leading and trailing double quotes of all flavors when a note with a quote is transformed for Mastodon.
+  * Ensure persisting line breaks for preformatted blocks with `<br>` tags.
+  * Improve handling of lists and list items when transforming content for Mastodon.
+* Update `@wordpress/scripts` dependency to 26.8.0.
 
 ### 1.5.0
 
