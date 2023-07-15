@@ -456,7 +456,16 @@ function transform_block( array $block ): string {
 		$content .= '“';
 
 		foreach ( $block['innerBlocks'] as $inner_block ) {
-			$content .= transform_block( $inner_block );
+			// Strip leading and trailing double quotation marks.
+			$content .= html_entity_decode(
+				preg_replace(
+					'/^(&quot;|&ldquo;|&rdquo;)|(&quot;|&ldquo;|&rdquo;)$/',
+					'',
+					htmlentities(
+						transform_block( $inner_block )
+					)
+				),
+			);
 		}
 
 		$citation = trim( ltrim( trim( strip_html( $block['innerHTML'] ) ), '-' ) );

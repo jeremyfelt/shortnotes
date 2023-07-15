@@ -195,6 +195,25 @@ https://www.youtube.com/watch?v=5NPBIwQyPWE
 	}
 
 	/**
+	 * A note with a quote that starts with double quotes should trim the extra double quotes.
+	 */
+	public function test_convert_trim_extra_double_quotes_from_note() {
+		ob_start();
+		?>
+		<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>"A quote in a note that starts and ends with a double quote character that should be removed because we add a double quote character."</p>
+<!-- /wp:paragraph --><cite>A test name</cite></blockquote>
+<!-- /wp:quote -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = '“A quote in a note that starts and ends with a double quote character that should be removed because we add a double quote character.” - A test name';
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * A note with a single paragraph should have a title that starts with the paragraph text.
 	 */
 	public function test_generated_title_note_has_single_paragraph_block() {
