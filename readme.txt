@@ -12,7 +12,7 @@ Add a notes post type to WordPress. For your short notes.
 
 ## Description
 
-Shortnotes adds a custom post type, **Notes**, intended for use when publishing short pieces of content, similar to that found on Twitter, Instagram, and other social networks.
+Shortnotes adds a custom post type, **Notes**, used to publish short pieces of content on your website, similar to social networks like Mastodon, Twitter, or Instagram.
 
 ### No titles
 
@@ -24,7 +24,7 @@ A title **is** generated automatically from note content and is used as the note
 
 ### Limited blocks
 
-The **Notes** post type uses only basic content blocks like paragraph, image, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
+The **Notes** post type supports basic content blocks like paragraph, list, quote, image, preformatted text, gallery, video, and embed. Using a defined list of relatively simple blocks helps to keep notes simple.
 
 ### Webmention support
 
