@@ -55,6 +55,10 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.6.1
+
+* Remove `vendor/` directory from distribution.
+
 ### 1.6.0
 
 * Improve title generation when a note starts with a quote.
