@@ -174,6 +174,7 @@ function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 			'core/gallery',
 			'core/image',
 			'core/list',
+			'core/list-item',
 			'core/paragraph',
 			'core/preformatted',
 			'core/pullquote',
@@ -487,6 +488,16 @@ function transform_block( array $block ): string {
 				trim( $block['innerHTML'] )
 			)
 		);
+	} elseif ( 'core/list' === $block['blockName'] ) {
+		$list_content = '';
+
+		foreach ( $block['innerBlocks'] as $inner_block ) {
+			$list_content .= transform_block( $inner_block );
+		}
+
+		$content .= rtrim( $list_content, "\n" );
+	} elseif ( 'core/list-item' === $block['blockName'] ) {
+		$content .= '- ' . strip_html( trim( $block['innerHTML'] ) ) . "\n";
 	} else {
 		$content .= strip_html( trim( $block['innerHTML'] ) );
 	}

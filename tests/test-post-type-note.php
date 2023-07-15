@@ -153,6 +153,42 @@ class TestPostTypeNote extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A list block should render as text with a dash and a space at the start of each
+	 * list item.
+	 */
+	public function test_convert_list_block() {
+		ob_start();
+		?>
+		<!-- wp:paragraph -->
+<p>This is a list that should be preserved on Mastodon:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><!-- wp:list-item -->
+<li>Test item one</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Test item two</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Test item three</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>A dash and a space should be added to the front of each line.</p>
+<!-- /wp:paragraph -->
+		<?php
+		$pre_html         = ob_get_clean();
+		$expected_text    = "This is a list that should be preserved on Mastodon:\n\n- Test item one\n- Test item two\n- Test item three\n\nA dash and a space should be added to the front of each line.";
+		$transformed_text = Note\transform_content( $pre_html );
+
+		$this->assertEquals( $expected_text, $transformed_text );
+	}
+
+	/**
 	 * A single quote block containing a verse block and a citation should
 	 * render as text surrounded with curly quotes, and the link breaks from
 	 * the verse should be maintained.
