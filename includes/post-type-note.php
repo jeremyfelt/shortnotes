@@ -174,6 +174,7 @@ function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 			'core/gallery',
 			'core/image',
 			'core/list',
+			'core/list-item',
 			'core/paragraph',
 			'core/preformatted',
 			'core/pullquote',
