@@ -207,6 +207,9 @@ function get_placeholder_title() {
 function generate_sub_title( string $html ): string {
 	$sub_title = wp_strip_all_tags( $html );
 
+	// Stripe newline characters.
+	$sub_title = str_replace( array( "\r", "\n" ), '', $sub_title );
+
 	// At the risk of being complicated, determine the length of the translated "Note" pretext so
 	// that we can build a maximum string of 50 characters.
 	$string_lenth = 50 - strlen( get_placeholder_title() );
@@ -242,7 +245,7 @@ function get_formatted_title( array $post_data ): string {
 			// A paragraph has been found, we're moving on and using it for the title.
 			break;
 		} elseif ( 'core/quote' === $block['blockName'] ) {
-			$sub_title = transform_content( $post_data['post_content'] );
+			$sub_title = generate_sub_title( '&ldquo;' . trim( $post_data['post_content'] ) );
 
 			// A quote has been found, use its plain text equivalent and move on.
 			break;
@@ -453,12 +456,25 @@ function transform_block( array $block ): string {
 		$content .= '“';
 
 		foreach ( $block['innerBlocks'] as $inner_block ) {
-			$content .= transform_block( $inner_block );
+			// Strip leading and trailing double quotation marks.
+			$content .= html_entity_decode(
+				preg_replace(
+					'/^(&quot;|&ldquo;|&rdquo;)|(&quot;|&ldquo;|&rdquo;)$/',
+					'',
+					htmlentities(
+						transform_block( $inner_block )
+					)
+				),
+			);
 		}
 
-		// Quotes use a dash before the citation is appended.
-		$content .= '” - ';
-		$content .= strip_html( trim( $block['innerHTML'] ) );
+		$citation = trim( ltrim( trim( strip_html( $block['innerHTML'] ) ), '-' ) );
+
+		if ( '' !== $citation ) {
+			$content .= '” - ' . $citation;
+		} else {
+			$content .= '”';
+		}
 	} elseif ( 'core/embed' === $block['blockName'] ) {
 		$content .= $block['attrs']['url'] ?? '';
 	} else {
