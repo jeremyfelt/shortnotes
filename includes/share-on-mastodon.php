@@ -17,8 +17,9 @@ add_filter( 'share_on_mastodon_toot_args', __NAMESPACE__ . '\filter_args', 10, 2
  *
  * @param array    $args The args sent with a new Mastodon post.
  * @param \WP_Post $post The post object.
+ * @return array Modified args.
  */
-function filter_args( array $args, \WP_Post $post ) : array {
+function filter_args( array $args, \WP_Post $post ): array {
 	if ( Note\get_slug() !== $post->post_type ) {
 		return $args;
 	}
