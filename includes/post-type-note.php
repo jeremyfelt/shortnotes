@@ -425,7 +425,7 @@ function extract_links( string $html ): array {
 
 	$links = array_filter(
 		$matches[2],
-		function( $link ) {
+		function ( $link ) {
 			return wp_parse_url( $link, PHP_URL_HOST );
 		}
 	);

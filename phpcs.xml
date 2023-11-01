@@ -25,7 +25,16 @@
 	<config name="minimum_supported_wp_version" value="5.9"/>
 
 	<rule ref="VariableAnalysis" />
-	<rule ref="WordPress-Extra" />
+	<rule ref="WordPress-Extra">
+		<!-- Temporarily excluded. -->
+		<exclude name="PHPCompatibility.ParameterValues.NewHTMLEntitiesFlagsDefault.NotSet"/>
+
+		<!-- WordPress should allow short array syntax. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+
+		<!-- I'm tired of Yoda, y'all, even if I still mostly use it. -->
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+	</rule>
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
@@ -43,15 +52,5 @@
 		<properties>
 			<property name="blank_line_check" value="true"/>
 		</properties>
-	</rule>
-
-	<!-- WordPress should allow short array syntax. -->
-	<rule ref="Generic.Arrays.DisallowShortArraySyntax">
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
-	</rule>
-
-	<!-- I'm tired of Yoda, y'all. -->
-	<rule ref="WordPress.PHP.YodaConditions">
-		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
 	</rule>
 </ruleset>
