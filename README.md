@@ -55,6 +55,14 @@ Those adjustments (a) remove the display of a title for the note post type and (
 
 ## Changelog
 
+### 1.6.2
+
+* Fix an issue when prepending reply markup to content during an oembed request. Thanks [jorbin](https://profiles.wordpress.org/jorbin/)!
+* Update `@wordpress/scripts` dependency to 26.15.0.
+* Add phpstan configuration.
+* Remove old, unnecessary pre-PHP 5.6 notice.
+* Confirm upcoming WordPress 6.4 support.
+
 ### 1.6.1
 
 * Remove `vendor/` directory from distribution.
