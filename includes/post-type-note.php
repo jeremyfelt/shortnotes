@@ -161,9 +161,9 @@ function register_meta() {
  * Note: There's nothing horrible about allowing more blocks. Unhooking this
  *       function from the `allowed_block_types` filter won't cause any trouble.
  *
- * @param bool|array $allowed_block_types A list of allowed block types. Boolean true by default.
- * @param \WP_Post   $post                The current note.
- * @return array A modified list of allowed block types.
+ * @param bool|string[] $allowed_block_types A list of allowed block types. Boolean true by default.
+ * @param \WP_Post      $post                The current note.
+ * @return bool|string[] A modified list of allowed block types.
  */
 function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 	if ( get_slug() === $post->post_type ) {
@@ -415,10 +415,10 @@ function get_note_by_post_name( string $post_name ): int {
 }
 
 /**
- * Parse and move anchors to the end of post content.
+ * Extract a list of links from note content.
  *
- * @param string $html The post content.
- * @return array Modified post content.
+ * @param string $html The note content.
+ * @return string[] A list of links.
  */
 function extract_links( string $html ): array {
 	preg_match_all( '/<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1/', $html, $matches );
