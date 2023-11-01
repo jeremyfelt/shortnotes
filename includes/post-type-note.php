@@ -379,7 +379,14 @@ function prepend_reply_to_markup( string $content ): string {
 		return $content;
 	}
 
-	$current_post    = get_post();
+	$current_post = get_post();
+
+	// We can only adjust content with context, which WordPress does not
+	// guarantee when filtering `the_content`.
+	if ( ! $current_post ) {
+		return $content;
+	}
+
 	$reply_to_markup = get_reply_to_markup( $current_post );
 
 	$content = $reply_to_markup . $content;
