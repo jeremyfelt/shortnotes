@@ -63,7 +63,7 @@ function is_mastodon_server( string $url ): bool {
  * @param string $url The Mastodon status URL.
  * @return int The status ID if available. 0 if not.
  */
-function get_reply_to_id( string $url ) : int {
+function get_reply_to_id( string $url ): int {
 	$site_host = wp_parse_url( home_url(), PHP_URL_HOST );
 	$url_host  = wp_parse_url( $url, PHP_URL_HOST );
 	$url_path  = wp_parse_url( $url, PHP_URL_PATH );
