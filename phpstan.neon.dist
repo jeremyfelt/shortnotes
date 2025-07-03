@@ -9,4 +9,3 @@ parameters:
     - vendor
     - node_modules
   ignoreErrors:
-    - '#has no return type specified.#'
