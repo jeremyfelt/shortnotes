@@ -2,4 +2,7 @@
 <ruleset name="WordPress coding standards for Happy Prime plugins">
 	<file>.</file>
 	<rule ref="vendor/happyprime/coding-standards/HappyPrime"/>
+
+	<!-- Ignore our phpstan stubs. -->
+	<exclude-pattern>phpstan/stubs.php</exclude-pattern>
 </ruleset>

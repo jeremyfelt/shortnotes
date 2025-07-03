@@ -13,4 +13,4 @@
  *
  * @return list<array{blockName: string|null, attrs: mixed[], innerBlocks: mixed[], innerHTML: string, innerContent: mixed[]}>
  */
-function parse_blocks(string $content): array {}
+function parse_blocks( string $content ): array {}
