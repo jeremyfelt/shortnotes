@@ -9,7 +9,7 @@ namespace ShortNotes\PostType\Note;
 
 add_action( 'init', __NAMESPACE__ . '\register_post_type', 10 );
 add_action( 'admin_init', __NAMESPACE__ . '\flush_rewrite_rules', 10 );
-add_filter( 'allowed_block_types', __NAMESPACE__ . '\filter_allowed_block_types', 10, 2 );
+add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\filter_allowed_block_types_by_context', 10, 2 );
 add_filter( 'wp_insert_post_data', __NAMESPACE__ . '\filter_wp_insert_post_data', 10 );
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
 add_filter( 'the_content', __NAMESPACE__ . '\prepend_reply_to_markup', 5 );
@@ -185,6 +185,24 @@ function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
 	}
 
 	return $allowed_block_types;
+}
+
+/**
+ * Limit the blocks that can be used by the editor based on the context.
+ *
+ * This function is a wrapper for `filter_allowed_block_types()` that accounts
+ * for the deprecation of the `allowed_block_types` filter in WP 5.8.0.
+ *
+ * @param bool|string[]           $allowed_block_types A list of allowed block types. Boolean true by default.
+ * @param WP_Block_Editor_Context $context             The current block editor context.
+ * @return mixed
+ */
+function filter_allowed_block_types_by_context( $allowed_block_types, \WP_Block_Editor_Context $context ) {
+	if ( 'core/edit-post' !== $context->name ) {
+		return $allowed_block_types;
+	}
+
+	return filter_allowed_block_types( $allowed_block_types, $context->post );
 }
 
 /**
