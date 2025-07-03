@@ -470,9 +470,11 @@ function transform_block( array $block ): string {
 					'/^(&quot;|&ldquo;|&rdquo;)|(&quot;|&ldquo;|&rdquo;)$/',
 					'',
 					htmlentities(
-						transform_block( $inner_block )
+						transform_block( $inner_block ),
+						ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401,
 					)
 				),
+				ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401,
 			);
 		}
 
