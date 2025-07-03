@@ -193,8 +193,8 @@ function filter_allowed_block_types( $allowed_block_types, \WP_Post $post ) {
  * This function is a wrapper for `filter_allowed_block_types()` that accounts
  * for the deprecation of the `allowed_block_types` filter in WP 5.8.0.
  *
- * @param bool|string[]           $allowed_block_types A list of allowed block types. Boolean true by default.
- * @param WP_Block_Editor_Context $context             The current block editor context.
+ * @param bool|string[]            $allowed_block_types A list of allowed block types. Boolean true by default.
+ * @param \WP_Block_Editor_Context $context             The current block editor context.
  * @return mixed
  */
 function filter_allowed_block_types_by_context( $allowed_block_types, \WP_Block_Editor_Context $context ) {
