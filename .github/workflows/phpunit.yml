@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - trunk
-      - develop
   pull_request:
     branches:
       - trunk
-      - develop
 
 jobs:
   phpunit:
@@ -16,28 +14,23 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:5.7
-        ports:
-          - 3306/tcp
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        # Set health checks to wait until mysql has started
-        options: >-
-          --health-cmd "mysqladmin ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
+        database:
+          image: mysql:latest
+          env:
+            MYSQL_DATABASE: wordpress_tests
+            MYSQL_ROOT_PASSWORD: password
+          ports:
+            - 3306:3306
 
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4', '8.0', '8.1']
+        php: ['7.4', '8.3']
         wordpress: ['latest']
         experimental: [false]
         include:
-          - php: '8.2'
+          - php: '8.4'
             wordpress: 'trunk'
             experimental: true
 
@@ -53,29 +46,31 @@ jobs:
           extensions: mysqli
           tools: composer, cs2pr
 
+      - name: Install SVN
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y subversion
+
       - name: Install WordPress test setup
         env:
           WP_VERSION: ${{ matrix.wordpress }}
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
         run: bash bin/install-wp-tests.sh wordpress_test root password "127.0.0.1:$MYSQL_PORT" "$WP_VERSION"
 
-      - name: Get Composer cache directory
-        id: composer-cache
+      - name: Cache Composer
+        id: cache-composer
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Setup cache
-        uses: pat-s/always-upload-cache@v1.1.4
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v4
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ${{ steps.cache-composer.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
 
       - name: Install dependencies
         run: |
-          composer update
-          composer install --no-interaction --no-scripts
+          composer install --prefer-dist --no-progress
 
       - name: Run tests
         run: composer phpunit

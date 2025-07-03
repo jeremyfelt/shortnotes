@@ -5,8 +5,9 @@ parameters:
   scanFiles:
       - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
       - %rootDir%/../../php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php
+  stubFiles:
+    - phpstan/stubs.php
   excludePaths:
     - vendor
     - node_modules
   ignoreErrors:
-    - '#has no return type specified.#'

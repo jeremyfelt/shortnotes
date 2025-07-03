@@ -1,4 +1,4 @@
-name: PHP_CodeSniffer
+name: PHPStan
 
 on: pull_request
 
@@ -32,4 +32,4 @@ jobs:
           composer install --prefer-dist --no-progress
 
       - name: Detect coding standard violations
-        run: vendor/bin/phpcs -q --report=checkstyle . | cs2pr --graceful-warnings
+        run: composer phpstan
