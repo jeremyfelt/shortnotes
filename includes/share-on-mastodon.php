@@ -127,7 +127,7 @@ function filter_status_text( string $status, \WP_Post $post ): string {
 	 */
 	$bypass = apply_filters( 'shortnotes_bypass_filter_status_text', false, $status, $post );
 
-	if ( $bypass === true ) {
+	if ( true === $bypass ) {
 		return $status;
 	}
 
