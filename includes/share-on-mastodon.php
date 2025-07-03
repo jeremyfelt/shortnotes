@@ -116,16 +116,16 @@ function get_reply_to_id( string $url ): int {
  */
 function filter_status_text( string $status, \WP_Post $post ): string {
 	/**
-	 * Filter to bypass modification of default sharing text.
+	 * Filter to bypass modification of default status text.
 	 *
-	 * Allows developers to bypass the filtering of a post's status for certain
-	 * post types or other post properties.
+	 * Allows developers to bypass the filtering of a post's status text for
+	 * certain post types or other post properties.
 	 *
-	 * @param bool     $bypass Whether to bypass the modifying text. Default false.
-	 * @param string   $status The default status.
+	 * @param bool     $bypass Whether to bypass status text filtering. Default false.
+	 * @param string   $status The default status text.
 	 * @param \WP_Post $post   The post being shared.
 	 */
-	$bypass = apply_filters( 'shortnotes_bypass_post_status_modification', false, $status, $post );
+	$bypass = apply_filters( 'shortnotes_bypass_filter_status_text', false, $status, $post );
 
 	if ( $bypass === true ) {
 		return $status;
