@@ -115,6 +115,22 @@ function get_reply_to_id( string $url ): int {
  * @return string The modified status text.
  */
 function filter_status_text( string $status, \WP_Post $post ): string {
+	/**
+	 * Filter to bypass modification of default status text.
+	 *
+	 * Allows developers to bypass the filtering of a post's status text for
+	 * certain post types or other post properties.
+	 *
+	 * @param bool     $bypass Whether to bypass status text filtering. Default false.
+	 * @param string   $status The default status text.
+	 * @param \WP_Post $post   The post being shared.
+	 */
+	$bypass = apply_filters( 'shortnotes_bypass_filter_status_text', false, $status, $post );
+
+	if ( true === $bypass ) {
+		return $status;
+	}
+
 	$status = Note\transform_content( $post->post_content );
 
 	return $status;
