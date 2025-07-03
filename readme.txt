@@ -1,12 +1,12 @@
 # Shortnotes
 Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
-Requires at least: 5.6
+Requires at least: 6.3
 Tested up to: 6.8
 Stable tag: 1.6.2
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Requires PHP: 5.6
+Requires PHP: 7.2
 
 Add a notes post type to WordPress. For your short notes.
 
