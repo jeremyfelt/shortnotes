@@ -61,6 +61,17 @@ If you do find yourself wanting to customize, I have made [my site's theme](http
 
 ## Changelog
 
+### 1.7.0
+
+* Introduce 'shortnotes_bypass_filter_status_text' filter. Thanks [peterwilsoncc](https://profiles.wordpress.org/peterwilsoncc/)!
+  * Allows the contextual bypass our modification of note text when using [Share On Mastodon](https://wordpress.org/plugins/share-on-mastodon/).
+* Avoid deprecated 'allowed_block_types' filter. Thanks [peterwilsoncc](https://profiles.wordpress.org/peterwilsoncc/)!
+* Explicitly set flags param in HTML entity functions.
+* Import `PluginDocumentSettingPanel` from `@wordpress/editor` vs `@wordpress/edit-post`.
+* Confirm support for WordPress 6.8. Thanks [peterwilsoncc](https://profiles.wordpress.org/peterwilsoncc/)!
+* Clarify minimum supported versions: PHP 7.2, WP 6.3.
+* Update coding standards, developer tooling.
+
 ### 1.6.2
 
 * Fix an issue when prepending reply markup to content during an oembed request. Thanks [jorbin](https://profiles.wordpress.org/jorbin/)!
