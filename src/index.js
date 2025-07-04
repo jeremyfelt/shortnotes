@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { SelectControl, TextControl } from '@wordpress/components';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 const NoteTypeSideBarPanel = () => {
