@@ -20,3 +20,4 @@ phpcs.xml
 phpstan.neon.dist
 phpunit.xml
 README.md
+webpack.config.js
