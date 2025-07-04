@@ -3,7 +3,7 @@ Contributors: jeremyfelt
 Tags: indieweb, notes, replies, short
 Requires at least: 6.3
 Tested up to: 6.8
-Stable tag: 1.6.2
+Stable tag: 1.7.0
 License: GPLv2 or Later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
