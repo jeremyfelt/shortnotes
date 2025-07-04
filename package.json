@@ -16,13 +16,21 @@
 		"url": "https://github.com/jeremyfelt/shortnotes/issues"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^26.15.0"
+		"@babel/core": "^7.28.0",
+		"@babel/plugin-transform-runtime": "^7.28.0",
+		"@babel/preset-env": "^7.28.0",
+		"@babel/preset-react": "^7.27.1",
+		"@happyprime/eslint-config": "^0.0.14",
+		"@wordpress/dependency-extraction-webpack-plugin": "^6.26.0",
+		"babel-loader": "^10.0.0",
+		"copy-webpack-plugin": "^13.0.0",
+		"webpack": "^5.99.9",
+		"webpack-cli": "^6.0.1"
 	},
 	"scripts": {
-		"build": "wp-scripts build",
-		"lint": "wp-scripts lint-js",
-		"fix": "wp-scripts lint-js --fix",
-		"lint:pkg-json": "wp-scripts lint-pkg-json",
-		"start": "wp-scripts start"
+		"build": "webpack --mode production",
+		"start": "webpack --mode development --watch",
+		"lint": "eslint ./src",
+		"fix": "eslint ./src --fix"
 	}
 }
