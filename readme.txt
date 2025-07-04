@@ -57,9 +57,7 @@ If this template tag is **not** used, then the Shortnotes plugin will automatica
 
 No customization of your theme is required to use this plugin, though you will likely want to think through how titles are displayed and if you want full support for webmentions.
 
-If you do find yourself wanting to customize, I have made [adjustments to my site's theme](https://github.com/jeremyfelt/writemore/blob/0b344cc9613b1ed011cba13cb3c09376def596fc/template-parts/content/content-single.php#L16-L36), a child theme of Twenty Twenty One, while developing this plugin, that can be used as an example.
-
-Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
+If you do find yourself wanting to customize, I have made [my site's theme](https://github.com/jeremyfelt/writemore/) fully compatible while developing this plugin. It may be a helpful example.
 
 ## Changelog
 
