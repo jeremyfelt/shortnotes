@@ -49,15 +49,24 @@ If this template tag is **not** used, then the Shortnotes plugin will automatica
 
 No customization of your theme is required to use this plugin, though you will likely want to think through how titles are displayed and if you want full support for webmentions.
 
-If you do find yourself wanting to customize, I have made [adjustments to my site's theme](https://github.com/jeremyfelt/writemore/blob/0b344cc9613b1ed011cba13cb3c09376def596fc/template-parts/content/content-single.php#L16-L36), a child theme of Twenty Twenty One, while developing this plugin, that can be used as an example.
-
-Those adjustments (a) remove the display of a title for the note post type and (b) output reply to markup outside of the main content element.
+If you do find yourself wanting to customize, I have made [my site's theme](https://github.com/jeremyfelt/writemore/) fully compatible while developing this plugin. It may be a helpful example.
 
 ## Changelog
 
+### 1.7.0
+
+* Introduce 'shortnotes_bypass_filter_status_text' filter. Thanks [peterwilsoncc](https://github.com/peterwilsoncc)!
+  * Allows the contextual bypass our modification of note text when using [Share On Mastodon](https://wordpress.org/plugins/share-on-mastodon/).
+* Avoid deprecated 'allowed_block_types' filter. Thanks [peterwilsoncc](https://github.com/peterwilsoncc)!
+* Explicitly set flags param in HTML entity functions.
+* Import `PluginDocumentSettingPanel` from `@wordpress/editor` vs `@wordpress/edit-post`.
+* Confirm support for WordPress 6.8. Thanks [peterwilsoncc](https://github.com/peterwilsoncc)!
+* Clarify minimum supported versions: PHP 7.2, WP 6.3.
+* Update coding standards, developer tooling.
+
 ### 1.6.2
 
-* Fix an issue when prepending reply markup to content during an oembed request. Thanks [jorbin](https://profiles.wordpress.org/jorbin/)!
+* Fix an issue when prepending reply markup to content during an oembed request. Thanks [aaronjorbin](https://github.com/aaronjorbin)!
 * Update `@wordpress/scripts` dependency to 26.15.0.
 * Add phpstan configuration.
 * Remove old, unnecessary pre-PHP 5.6 notice.
